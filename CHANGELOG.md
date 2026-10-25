@@ -1,5 +1,8 @@
 # Zmiany
 
+## 0.1.1 (25 października 2026)
+- Podgląd planu do akceptacji na białym tle (czytelniejszy na co dzień); szkice grafik zostają ciemne jak grafiki eventów.
+
 ## 0.1.0 (25 października 2026)
 - Pierwsza wersja: 9 skilli, 6 agentów, panel „Agent AI Marketing”, konektory Canva i Postiz.
 - Wiedza: kontekst LABOSPORT, playbook komunikacji, głos marki, czarna lista zwrotów, praca w Canvie i Postiz.

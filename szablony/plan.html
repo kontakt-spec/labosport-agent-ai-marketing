@@ -8,9 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Grenze+Gotisch:wght@600&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b0b0b; --panel:#141414; --panel2:#1a1a1a; --line:#262626;
-  --tx:#f2f2f2; --tx2:#a3a3a3; --tx3:#6b6b6b;
-  --ok:#3ecf8e; --warn:#f5b041; --bad:#ef5b5b;
+  --bg:#f6f6f3; --panel:#ffffff; --panel2:#f4f4f0; --line:#e4e4de;
+  --tx:#141414; --tx2:#5c5c57; --tx3:#8c8c86;
+  --ok:#1f9d63; --warn:#b7791f; --bad:#c53b3b;
   --akcent:#3d8fd6; --akcent2:#d4532b;
 }
 *{box-sizing:border-box}
@@ -25,13 +25,13 @@ h1{font-size:44px;line-height:1.05;margin:36px 0 8px;font-weight:900;letter-spac
 .stat b{display:block;font-size:28px;font-weight:300}
 .stat span{font-size:12px;color:var(--tx2);text-transform:uppercase;letter-spacing:.06em}
 .sekcja{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--tx2);margin:36px 0 12px}
-.zal{background:var(--panel);padding:20px 22px;line-height:1.6;color:#d6d6d6;white-space:pre-wrap}
+.zal{background:var(--panel);border:1px solid var(--line);padding:20px 22px;line-height:1.6;color:#2b2b28;white-space:pre-wrap}
 .kamienie{display:grid;grid-template-columns:120px 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
 .kamienie div{background:var(--panel);padding:10px 14px;font-size:14px}
 .kamienie .d{color:var(--tx2)}
 .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0 18px}
 .chip{border:1px solid var(--line);background:var(--panel);color:var(--tx2);padding:7px 12px;font-size:13px;cursor:pointer;font-family:inherit}
-.chip.on{color:var(--tx);border-color:#555;background:var(--panel2)}
+.chip.on{color:#fff;border-color:var(--tx);background:var(--tx)}
 .spacer{flex:1}
 /* kalendarz */
 .mies{margin-bottom:26px}
@@ -39,31 +39,32 @@ h1{font-size:44px;line-height:1.05;margin:36px 0 8px;font-weight:900;letter-spac
 .grid7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
 .grid7 .h{background:var(--panel2);font-size:11px;color:var(--tx3);text-transform:uppercase;padding:6px 8px;letter-spacing:.06em}
 .dz{background:var(--panel);min-height:92px;padding:6px;font-size:12px;min-width:0}
-.dz.puste{background:#0f0f0f}
+.dz.puste{background:var(--panel2)}
 .dz .n{color:var(--tx3);font-size:11px;margin-bottom:4px;display:flex;justify-content:space-between}
 .dz .k{color:var(--warn);font-size:10px;text-align:right}
-.pill{display:block;padding:4px 6px;margin-bottom:3px;border-left:3px solid var(--tx3);background:var(--panel2);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px}
-.pill.post{border-color:var(--akcent)} .pill.karuzela{border-color:#9b7bf0} .pill.story{border-color:var(--akcent2)} .pill.rolka{border-color:var(--ok)}
-.pill.akc{opacity:.55} .pill.usun{text-decoration:line-through;opacity:.4}
+.pill{display:block;padding:4px 6px;margin-bottom:3px;border-left:3px solid var(--tx3);background:var(--panel2);color:var(--tx);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px}
+.pill.post{border-color:var(--akcent)} .pill.karuzela{border-color:#8b6ae6} .pill.story{border-color:var(--akcent2)} .pill.rolka{border-color:var(--ok)}
+.pill.akc{opacity:.5} .pill.usun{text-decoration:line-through;opacity:.4}
 /* karty */
-.karta{display:grid;grid-template-columns:260px 1fr;gap:26px;background:var(--panel);border:1px solid var(--line);padding:22px;margin-bottom:14px;scroll-margin-top:20px}
-.karta.akc{border-color:#24533f} .karta.zmien{border-color:#6b5222} .karta.usun{opacity:.5}
+.karta{display:grid;grid-template-columns:260px 1fr;gap:26px;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--line);padding:22px;margin-bottom:14px;scroll-margin-top:20px}
+.karta.akc{border-left-color:var(--ok);background:#f3fbf7} .karta.zmien{border-left-color:var(--warn);background:#fdf8ef} .karta.usun{opacity:.45}
 .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--tx2);margin-bottom:10px}
-.badge{border:1px solid var(--line);padding:3px 8px;text-transform:uppercase;letter-spacing:.06em;font-size:11px}
-.badge.f{color:var(--tx)} .badge.warn{border-color:#6b5222;color:var(--warn)}
+.badge{border:1px solid var(--line);background:var(--panel);padding:3px 8px;text-transform:uppercase;letter-spacing:.06em;font-size:11px}
+.badge.f{color:var(--tx);border-color:#c9c9c2} .badge.warn{border-color:#e3c27a;background:#fdf5e2;color:#8a5a0e}
 .temat{font-size:20px;font-weight:700;margin:0 0 12px}
-.opis{white-space:pre-wrap;line-height:1.55;color:#dcdcdc;font-size:15px;background:var(--panel2);padding:14px 16px;margin:0 0 10px}
+.opis{white-space:pre-wrap;line-height:1.55;color:#22221f;font-size:15px;background:var(--panel2);padding:14px 16px;margin:0 0 10px}
 .kom{font-size:13px;color:var(--tx2);margin-bottom:10px}
 .kom b{color:var(--tx)}
 .uz{font-size:13px;color:var(--tx3);margin-bottom:14px}
 .decyzja{display:flex;gap:8px;flex-wrap:wrap}
-.btn{font-family:inherit;font-size:13px;padding:8px 14px;border:1px solid #333;background:#1f1f1f;color:var(--tx);cursor:pointer}
-.btn.ok.on{background:#173b2c;border-color:var(--ok)}
-.btn.zm.on{background:#3b2e14;border-color:var(--warn)}
-.btn.us.on{background:#3b1717;border-color:var(--bad)}
-textarea{width:100%;margin-top:10px;background:#0f0f0f;border:1px solid #333;color:var(--tx);font-family:inherit;font-size:14px;padding:10px;min-height:64px;display:none}
+.btn{font-family:inherit;font-size:13px;padding:8px 14px;border:1px solid #cfcfc8;background:var(--panel);color:var(--tx);cursor:pointer}
+.btn:hover{border-color:var(--tx)}
+.btn.ok.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn.zm.on{background:var(--warn);border-color:var(--warn);color:#fff}
+.btn.us.on{background:var(--bad);border-color:var(--bad);color:#fff}
+textarea{width:100%;margin-top:10px;background:var(--panel);border:1px solid #cfcfc8;color:var(--tx);font-family:inherit;font-size:14px;padding:10px;min-height:64px;display:none}
 textarea.on{display:block}
-/* szkic grafiki */
+/* szkic grafiki (zostaje ciemny jak grafiki eventu) */
 .szkic{position:relative;width:260px;aspect-ratio:4/5;background:#222 center/cover no-repeat;overflow:hidden;color:#fff}
 .szkic.story{aspect-ratio:9/16;width:220px}
 .szkic::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,.85) 100%)}
@@ -73,16 +74,16 @@ textarea.on{display:block}
 .szkic .h2{font-family:"Grenze Gotisch",Georgia,serif;color:var(--akcent);font-size:15px;margin-top:6px;text-transform:uppercase;white-space:pre-line}
 .szkic.story .h2{font-size:12px}
 .szkic .cta{display:inline-block;margin-top:10px;background:var(--akcent);font-size:8px;font-weight:700;padding:4px 10px;border-radius:3px;letter-spacing:.04em}
-.szkic .brak{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--tx3);font-size:12px;z-index:1}
+.szkic .brak{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#9a9a94;font-size:12px;z-index:1}
 .podpis{font-size:11px;color:var(--tx3);margin-top:6px;width:260px}
 /* stopka */
-.stopka{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(11,11,11,.96);border-top:1px solid var(--line);backdrop-filter:blur(6px)}
+.stopka{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(255,255,255,.97);border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.05)}
 .stopka .in{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
 .licz{font-size:14px;color:var(--tx2)} .licz b{color:var(--tx)}
-.glowny{background:var(--tx);color:#000;border:0;font-weight:700;padding:11px 18px;font-family:inherit;font-size:14px;cursor:pointer}
+.glowny{background:var(--tx);color:#fff;border:0;font-weight:700;padding:11px 18px;font-family:inherit;font-size:14px;cursor:pointer}
 .ogolne{flex-basis:100%;display:none}
 .ogolne.on{display:block}
-.toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%);background:#fff;color:#000;padding:10px 16px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%);background:var(--tx);color:#fff;padding:10px 16px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.on{opacity:1}
 @media (max-width:760px){
   h1{font-size:32px}
