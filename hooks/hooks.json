@@ -1,0 +1,13 @@
+{
+  "modules": ["./register.tsx"],
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          { "type": "command", "command": "python3 -I \"${CLAUDE_PLUGIN_ROOT}/skrypty/sesja.py\"", "timeout": 10 }
+        ]
+      }
+    ]
+  }
+}

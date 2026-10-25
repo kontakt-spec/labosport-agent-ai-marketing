@@ -1,0 +1,27 @@
+{
+  "slug": "garmin-ultra-race",
+  "nazwa": "Garmin Ultra Race",
+  "skrot": "GUR",
+  "dyscyplina": "biegi trailowe i ultra (kwalifikacje UTMB)",
+  "data_start": "2026-12-04",
+  "data_koniec": "2026-12-05",
+  "daty_tekst": "4-5 grudnia 2026 (Gdańsk); 2027 do potwierdzenia",
+  "miejsce": "Myślenice, Tolkmicko, Radków, Gdańsk (TPK)",
+  "dystanse_opis": "2026: Myślenice 9.05 (78/48/27/13 km), Tolkmicko 18.07 (80/50/21/14 km), Radków 11-13.09 (78/57/24/11 km, Challenge 158K), Gdańsk 4-5.12 (101/53/27/12 km, Nocny GUR 6 km, Garmin Junior)",
+  "linki": {
+    "strona": "https://ultrarace.pl",
+    "zapisy": "https://ultrarace.pl",
+    "instagram": "https://www.instagram.com/garminultrarace/",
+    "facebook": "https://www.facebook.com/garminultrarace"
+  },
+  "kanaly": [
+    "instagram",
+    "facebook"
+  ],
+  "zakazane_slowa": [],
+  "styl_opisow": {
+    "max_emoji": 14,
+    "max_hashtagi": 6
+  },
+  "status_danych": "szkic: uzupełnij dokumenty w 01 Informacje o evencie, a agent uzupełni ten plik"
+}

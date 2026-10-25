@@ -1,0 +1,25 @@
+{
+  "slug": "triathlon-rzeszow",
+  "nazwa": "Triathlon Rzeszów",
+  "skrot": "ETC Rzeszów",
+  "dyscyplina": "triathlon",
+  "daty_tekst": "2027 do potwierdzenia (2026: 30-31.05)",
+  "miejsce": "Rzeszów",
+  "dystanse_opis": "do uzupełnienia",
+  "linki": {
+    "strona": "https://triathlonrzeszow.pl",
+    "zapisy": "https://triathlonrzeszow.pl",
+    "instagram": "https://www.instagram.com/triathlon_rzeszow/",
+    "facebook": null
+  },
+  "kanaly": [
+    "instagram",
+    "facebook"
+  ],
+  "zakazane_slowa": [],
+  "styl_opisow": {
+    "max_emoji": 14,
+    "max_hashtagi": 6
+  },
+  "status_danych": "szkic: uzupełnij dokumenty w 01 Informacje o evencie, a agent uzupełni ten plik"
+}

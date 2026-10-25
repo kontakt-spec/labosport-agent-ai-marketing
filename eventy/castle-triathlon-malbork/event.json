@@ -1,0 +1,197 @@
+{
+  "slug": "castle-triathlon-malbork",
+  "nazwa": "Castle Triathlon Malbork",
+  "nazwa_pelna": "Castle Triathlon Malbork im. Bartosza Kubickiego",
+  "skrot": "CTM",
+  "edycja": 26,
+  "edycja_rzymska": "XXVI",
+  "rok_edycji": 2027,
+  "data_start": "2027-09-04",
+  "data_koniec": "2027-09-05",
+  "daty_tekst": "4-5 września 2027",
+  "miejsce": "Malbork, Muzeum Zamkowe i rzeka Nogat",
+  "dyscyplina": "triathlon",
+  "sponsor_tytularny": "Garmin",
+  "gospodarze": [
+    "Miasto Malbork",
+    "Muzeum Zamkowe w Malborku"
+  ],
+  "organizatorzy": [
+    "LABOSPORT Polska (Marcin Florek, Filip Szołowski)",
+    "MKS Triathlon Malbork (Marcin Waniewski)"
+  ],
+  "dystanse": [
+    {
+      "nazwa": "dystans długi",
+      "zapis": "długi",
+      "plywanie_km": 3.8,
+      "rower_km": 180,
+      "bieg_km": 42.195,
+      "dzien": "niedziela",
+      "start": "06:00",
+      "dla_kogo": "najbardziej doświadczeni; od lat Mistrzostwa Polski na dystansie długim"
+    },
+    {
+      "nazwa": "aquabike",
+      "zapis": "aquabike",
+      "plywanie_km": 3.8,
+      "rower_km": 180,
+      "bieg_km": null,
+      "dzien": "niedziela",
+      "start": "06:00",
+      "dla_kogo": "pływanie i rower bez biegu"
+    },
+    {
+      "nazwa": "dystans 1/2",
+      "zapis": "1/2",
+      "plywanie_km": 1.9,
+      "rower_km": 90,
+      "bieg_km": 21.1,
+      "dzien": "niedziela",
+      "start": "11:00",
+      "dla_kogo": "zaawansowani"
+    },
+    {
+      "nazwa": "dystans 1/4",
+      "zapis": "1/4",
+      "plywanie_km": 0.95,
+      "rower_km": 45,
+      "bieg_km": 10.55,
+      "dzien": "sobota",
+      "start": "10:00",
+      "dla_kogo": "ambitni amatorzy, pierwszy poważniejszy start"
+    },
+    {
+      "nazwa": "dystans 1/8",
+      "zapis": "1/8",
+      "plywanie_km": 0.475,
+      "rower_km": 22.5,
+      "bieg_km": 5.275,
+      "dzien": "sobota",
+      "start": "08:00",
+      "dla_kogo": "debiutanci"
+    },
+    {
+      "nazwa": "sztafety",
+      "zapis": "sztafety",
+      "opis": "na wszystkich dystansach: jedna osoba płynie, druga jedzie, trzecia biegnie; na metę wbiegają razem"
+    },
+    {
+      "nazwa": "Castle Run Malbork",
+      "zapis": "Castle Run",
+      "opis": "biegi dzieci w sobotę 4.09.2027 od 15:00: 200 m (1-7 lat), 500 m (8-11 lat), 1000 m (12-15 lat)",
+      "ceny": "40 zł do 02.07.2027, 50 zł do 24.08.2027, 60 zł do 04.09.2027; zapisy online do 03.09.2027 20:00"
+    }
+  ],
+  "linki": {
+    "zapisy": "https://castletriathlon.com/zgloszenia/",
+    "strona": "https://castletriathlon.com",
+    "strona_na_grafice": "WWW.CASTLETRIATHLON.COM",
+    "trasa": "https://www.google.com/maps/d/u/0/viewer?mid=1teamFZYG0JkTzJVuqPojnBPq1ZrgPt8",
+    "regulamin_dlugi": "https://castletriathlon.com/malbork/regulamin-im/",
+    "regulamin_1_2": "https://castletriathlon.com/malbork/regulamin-12-im/",
+    "regulamin_1_4": "https://castletriathlon.com/malbork/regulamin-14-im/",
+    "regulamin_1_8": "https://castletriathlon.com/malbork/regulamin-18-im/",
+    "regulamin_castle_run": "https://castletriathlon.com/malbork/castle-run-malbork-biegi-dzieci/",
+    "facebook": "https://www.facebook.com/castletri",
+    "instagram": "https://www.instagram.com/castletriathlonmalbork/"
+  },
+  "kanaly": [
+    "instagram",
+    "facebook"
+  ],
+  "zakazane_slowa": [
+    "Ironman",
+    "IronMan",
+    "IRONMAN"
+  ],
+  "hasla": [
+    "żelazo nie klęka",
+    "Ból jest chwilowy, chwała jest wieczna"
+  ],
+  "fakty_do_wykorzystania": [
+    "pierwsza edycja w 2002 roku, w 2026 jubileuszowa XXV edycja z ponad 2500 uczestnikami",
+    "jedna z największych imprez triathlonowych w Polsce",
+    "start pływania w rzece Nogat u stóp zamku, rolling start",
+    "meta, biuro zawodów i część biegu na terenie Muzeum Zamkowego w Malborku",
+    "największy gotycki zamek ceglany na świecie, lista UNESCO",
+    "na startach dwóch najdłuższych dystansów gra Bogurodzica, są race i miny dymne",
+    "rycerze w krzyżackich strojach na trasie i na mecie",
+    "płaska, szybka trasa rowerowa po Żuławach Wiślanych",
+    "płaska trasa biegowa Bulwarem nad Nogatem",
+    "Mistrzostwa Polski na dystansie długim w triathlonie i aquabike",
+    "Malborskie Centrum Wolontariatu to ważny partner wydarzenia"
+  ],
+  "daty_specjalne": [
+    {
+      "data": "2027-09-03",
+      "typ": "race_week",
+      "opis": "piątek: EXPO, wprowadzanie rowerów 1/8 i 1/4, odprawa online 19:00 na FB"
+    },
+    {
+      "data": "2027-09-04",
+      "typ": "start",
+      "opis": "sobota: 1/8 (08:00), 1/4 (10:00), Castle Run (15:00), odprawa online 1/2, długi, aquabike 20:00"
+    },
+    {
+      "data": "2027-09-05",
+      "typ": "start",
+      "opis": "niedziela: długi i aquabike (06:00), 1/2 (11:00), dekoracja długiego 22:00"
+    },
+    {
+      "data": "2027-09-03",
+      "typ": "zapisy_castle_run_koniec",
+      "opis": "zapisy online na Castle Run do 20:00"
+    }
+  ],
+  "serie": {
+    "medal_monday": true
+  },
+  "hashtagi": [
+    "#CastleTriathlonMalbork",
+    "#żelazoNIEklęka",
+    "#CastleTriathlon",
+    "#Malbork"
+  ],
+  "uwagi": "Komunikacja 2027 używa domeny castletriathlon.com (na grafikach 2026 bywało .pl). Na grafikach wpisujemy WWW.CASTLETRIATHLON.COM. Dokument progów w Wordzie bywa starszy niż sprzedaż: przed planowaniem sprawdź castletriathlon.com/zgloszenia/oplaty/ i zaktualizuj progi_korekta. Strona /malbork/ i pasek boczny strony mają nieaktualne daty (XX edycja, 5-6 września 2026): nie bierz z nich faktów.",
+  "hashtagi_dodatkowe": [
+    "#Triathlon",
+    "#ZamekWMalborku",
+    "#ConquerTheCastle",
+    "#TriathlonPolska"
+  ],
+  "styl_opisow": {
+    "max_emoji": 14,
+    "max_hashtagi": 6,
+    "emoji_marki": [
+      "⚔️",
+      "🏰",
+      "🔥",
+      "🗡"
+    ],
+    "emoji_znaczniki": [
+      "📅",
+      "📍",
+      "🌐",
+      "➡️",
+      "⏳",
+      "🔗",
+      "👇",
+      "👉",
+      "🚨",
+      "❗"
+    ],
+    "cta_w_opisie": "🔗 Link do zapisów w komentarzu 👇",
+    "pierwszy_komentarz": "🗡 Link do zapisów - https://castletriathlon.com/zgloszenia/",
+    "zwracanie_sie": "Wy (Was, Wam) z wielkiej litery do społeczności, Ty w postach emocjonalnych",
+    "format_cen": "➡️ 1/4: 349 zł → 374 zł",
+    "podpis_daty": "📅 4-5 września 2027 | 📍 Malbork"
+  },
+  "progi_korekta": {
+    "zrodlo": "castletriathlon.com/zgloszenia/oplaty/ oraz post IG z 19.10.2026 (TRZECI PRÓG ZDOBYTY! SOLD OUT!)",
+    "sprawdzono": "2026-10-25",
+    "wyprzedane_do_progu": {
+      "DŁUGI|AQUABIKE|1/2": 3
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "slug": "garmin-gravel-race",
+  "nazwa": "Garmin Gravel Race",
+  "skrot": "GGR",
+  "dyscyplina": "gravel",
+  "daty_tekst": "2027 do potwierdzenia (2026: Tolkmicko 19.07, Szklarska Poręba 4.10)",
+  "miejsce": "Tolkmicko, Szklarska Poręba",
+  "dystanse_opis": "do uzupełnienia",
+  "linki": {
+    "strona": "https://gravelrace.pl",
+    "zapisy": "https://gravelrace.pl",
+    "instagram": "https://www.instagram.com/garmingravelrace/",
+    "facebook": "https://www.facebook.com/garmingravelrace"
+  },
+  "kanaly": [
+    "instagram",
+    "facebook"
+  ],
+  "zakazane_slowa": [],
+  "styl_opisow": {
+    "max_emoji": 14,
+    "max_hashtagi": 6
+  },
+  "status_danych": "szkic: uzupełnij dokumenty w 01 Informacje o evencie, a agent uzupełni ten plik"
+}

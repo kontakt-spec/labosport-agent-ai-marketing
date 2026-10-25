@@ -1,0 +1,25 @@
+{
+  "slug": "garmin-triminator-radkow",
+  "nazwa": "Garmin Triminator Radków",
+  "skrot": "GTR",
+  "dyscyplina": "triathlon w Górach Stołowych",
+  "daty_tekst": "2027 do potwierdzenia (2026: 12.09)",
+  "miejsce": "Radków",
+  "dystanse_opis": "1/8 „Terminacja”, 1/4 „I'll Be Back”, 1/2 „Dzień Sądu”, sztafety",
+  "linki": {
+    "strona": "https://triminator.pl",
+    "zapisy": "https://triminator.pl",
+    "instagram": "https://www.instagram.com/triminatorpl/",
+    "facebook": "https://www.facebook.com/triminatorpl"
+  },
+  "kanaly": [
+    "instagram",
+    "facebook"
+  ],
+  "zakazane_slowa": [],
+  "styl_opisow": {
+    "max_emoji": 14,
+    "max_hashtagi": 6
+  },
+  "status_danych": "szkic: uzupełnij dokumenty w 01 Informacje o evencie, a agent uzupełni ten plik"
+}

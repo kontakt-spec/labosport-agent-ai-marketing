@@ -1,0 +1,15 @@
+{
+  "name": "labosport-ai",
+  "owner": {
+    "name": "Paweł Czapczyk (ScaleUP AI)",
+    "email": "kontakt@pawelczapczyk.pl"
+  },
+  "plugins": [
+    {
+      "name": "labosport",
+      "source": "./",
+      "description": "LABOSPORT Agent AI Marketing: plan, grafiki w Canvie, opisy i szkice w Postiz z akceptacją na każdym etapie."
+    }
+  ],
+  "description": "Marketplace LABOSPORT Polska: Agent AI Marketing do komunikacji eventów sportowych."
+}

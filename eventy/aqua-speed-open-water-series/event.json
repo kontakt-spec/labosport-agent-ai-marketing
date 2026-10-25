@@ -1,0 +1,25 @@
+{
+  "slug": "aqua-speed-open-water-series",
+  "nazwa": "Aqua Speed Open Water Series",
+  "skrot": "ASOWS",
+  "dyscyplina": "pływanie na wodach otwartych (cykl)",
+  "daty_tekst": "sezon 2027: terminy wkrótce",
+  "miejsce": "2026: Ślesin 13.06, Syców 11.07, Stężyca 22.08 (finał)",
+  "dystanse_opis": "475 m, 950 m, 1,9 km, 3,8 km, Junior 100/200/475 m",
+  "linki": {
+    "strona": "https://openwaterseries.pl",
+    "zapisy": "https://openwaterseries.pl",
+    "instagram": "https://www.instagram.com/openwaterseriesinpoland/",
+    "facebook": "https://www.facebook.com/openwaterseriesinpoland"
+  },
+  "kanaly": [
+    "instagram",
+    "facebook"
+  ],
+  "zakazane_slowa": [],
+  "styl_opisow": {
+    "max_emoji": 14,
+    "max_hashtagi": 6
+  },
+  "status_danych": "szkic: uzupełnij dokumenty w 01 Informacje o evencie, a agent uzupełni ten plik"
+}

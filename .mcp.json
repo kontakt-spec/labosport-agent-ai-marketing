@@ -1,0 +1,6 @@
+{
+  "mcpServers": {
+    "canva": { "type": "http", "url": "https://mcp.canva.com/mcp" },
+    "postiz": { "type": "http", "url": "https://mcp.postiz.com/mcp-oauth-dynamic" }
+  }
+}

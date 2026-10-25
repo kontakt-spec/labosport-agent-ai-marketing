@@ -1,0 +1,27 @@
+{
+  "slug": "ultra-wysoczyzna",
+  "nazwa": "Meble Wójcik Ultra Wysoczyzna",
+  "skrot": "UW",
+  "dyscyplina": "biegi trailowe i ultra",
+  "data_start": "2027-04-16",
+  "data_koniec": "2027-04-18",
+  "daty_tekst": "16-18.04.2027",
+  "miejsce": "Elbląg, Wysoczyzna Elbląska",
+  "dystanse_opis": "Ryk Jelenia 103 km, Wycie Wilka 54 km, Kwik Dzika 22 km, Pisk Lisa 13 km, Huk Sowy 6 km, Triada Hoggo (3 dni), biegi Junior",
+  "linki": {
+    "strona": "https://ultrawysoczyzna.pl",
+    "zapisy": "https://ultrawysoczyzna.pl",
+    "instagram": "https://www.instagram.com/ultrawysoczyzna/",
+    "facebook": "https://www.facebook.com/ultrawysoczyzna"
+  },
+  "kanaly": [
+    "instagram",
+    "facebook"
+  ],
+  "zakazane_slowa": [],
+  "styl_opisow": {
+    "max_emoji": 14,
+    "max_hashtagi": 6
+  },
+  "status_danych": "szkic: uzupełnij dokumenty w 01 Informacje o evencie, a agent uzupełni ten plik"
+}

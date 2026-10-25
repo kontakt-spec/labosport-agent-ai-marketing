@@ -1,0 +1,25 @@
+{
+  "slug": "labosport",
+  "nazwa": "LABOSPORT (profil firmy)",
+  "skrot": "LABO",
+  "dyscyplina": "profil organizatora",
+  "daty_tekst": "cały rok",
+  "miejsce": "Elbląg (siedziba)",
+  "dystanse_opis": "nie dotyczy",
+  "linki": {
+    "strona": "https://labosport.pl",
+    "zapisy": null,
+    "instagram": "https://www.instagram.com/labosport/",
+    "facebook": null
+  },
+  "kanaly": [
+    "instagram",
+    "facebook"
+  ],
+  "zakazane_slowa": [],
+  "styl_opisow": {
+    "max_emoji": 14,
+    "max_hashtagi": 6
+  },
+  "status_danych": "szkic: uzupełnij dokumenty w 01 Informacje o evencie, a agent uzupełni ten plik"
+}

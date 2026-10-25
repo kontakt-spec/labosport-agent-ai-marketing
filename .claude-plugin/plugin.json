@@ -1,0 +1,22 @@
+{
+  "name": "labosport",
+  "displayName": "LABOSPORT Agent AI Marketing",
+  "version": "0.1.0",
+  "description": "Agent AI Marketing dla LABOSPORT Polska: planuje komunikację eventów sportowych, tworzy grafiki w Canvie na szablonach LABOSPORT, pisze opisy w ich stylu i wrzuca szkice postów do Postiz. Człowiek akceptuje każdy etap.",
+  "author": {
+    "name": "Paweł Czapczyk (ScaleUP AI)",
+    "email": "kontakt@pawelczapczyk.pl"
+  },
+  "homepage": "https://github.com/kontakt-spec/labosport-agent-ai-marketing",
+  "keywords": [
+    "labosport",
+    "marketing",
+    "social media",
+    "canva",
+    "postiz",
+    "triathlon",
+    "eventy"
+  ],
+  "types": "./types/index.d.ts",
+  "icon": "./.claude-plugin/icon.png"
+}

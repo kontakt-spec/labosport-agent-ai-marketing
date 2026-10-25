@@ -1,0 +1,1180 @@
+{
+ "uwagi": "Zdjęcia z dysku mają 1300x866 px. Na grafikę 1080x1350 trzeba je kadrować i powiększać ok. 1,6x, co obniża ostrość. Do grafik preferuj zdjęcia w pełnej rozdzielczości z Canvy (folder malbork_ctm2026) albo kadry z ruchem i ciemnym tłem, gdzie spadek ostrości jest mniej widoczny. Na zdjęciach jest znak wodny fotografa (Michał Buczyński) w rogu.",
+ "kategorie": [
+  "bieg",
+  "dron",
+  "dzieci",
+  "dzwon",
+  "kibice",
+  "medal",
+  "meta",
+  "plywanie",
+  "rower",
+  "rycerze",
+  "start",
+  "strefa_zmian",
+  "zamek"
+ ],
+ "zdjecia": [
+  {
+   "id": "1933284",
+   "kategoria": "plywanie",
+   "tagi": [
+    "pływanie",
+    "z góry",
+    "ciemna woda",
+    "pion"
+   ],
+   "opis": "pływak w pomarańczowym czepku z góry, ciemna woda; jedyne zdjęcie pionowe, idealne pod story i post 4:5",
+   "orientacja": "pion",
+   "rozmiar": "1300x1950"
+  },
+  {
+   "id": "1933343",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "mury",
+    "mężczyzna"
+   ],
+   "opis": "biegacz w czarnym stroju przy ceglanym murze zamku",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933357",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "zamek",
+    "kobieta"
+   ],
+   "opis": "biegaczka na tle bramy zamkowej",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933380",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "czasówka",
+    "pole"
+   ],
+   "opis": "kolarz na rowerze czasowym, zielone pole",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933394",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "szosa"
+   ],
+   "opis": "kolarz na drodze wśród drzew",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933462",
+   "kategoria": "zamek",
+   "tagi": [
+    "zamek",
+    "bez ludzi",
+    "brama"
+   ],
+   "opis": "wieże i brama zamku, kładka; tło pod tekst",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933497",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "zamek",
+    "mężczyzna"
+   ],
+   "opis": "biegacz w białej koszulce, ceglana wieża w tle",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933543",
+   "kategoria": "plywanie",
+   "tagi": [
+    "wyjście z wody",
+    "T1",
+    "rzeka"
+   ],
+   "opis": "zawodnik wychodzi z Nogatu, pomarańczowy czepek",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933592",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "taśma",
+    "kobieta",
+    "emocje"
+   ],
+   "opis": "zawodniczka zrywa taśmę na mecie, czerwony dywan",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933617",
+   "kategoria": "kibice",
+   "tagi": [
+    "kibice",
+    "transparent",
+    "bieg"
+   ],
+   "opis": "biegacz mija kibiców z transparentem",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933638",
+   "kategoria": "plywanie",
+   "tagi": [
+    "przed startem",
+    "portret",
+    "kobieta",
+    "uśmiech"
+   ],
+   "opis": "zawodniczka w piance i żółtym czepku, uśmiech, zbliżenie",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933656",
+   "kategoria": "start",
+   "tagi": [
+    "start",
+    "tłum",
+    "czepki",
+    "Garmin",
+    "mury"
+   ],
+   "opis": "tłum pływaków w zielonych czepkach pod murami, brama Garmin",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933667",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "rycerze",
+    "miecze",
+    "kobieta"
+   ],
+   "opis": "finiszerka z uniesionymi rękami, rycerze z mieczami",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933683",
+   "kategoria": "start",
+   "tagi": [
+    "start",
+    "tłum",
+    "czepki"
+   ],
+   "opis": "morze zielonych czepków przed startem",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933729",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "rodzina",
+    "dziecko",
+    "zamek"
+   ],
+   "opis": "finisz z dzieckiem biegnącym obok, zamek w tle",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933757",
+   "kategoria": "medal",
+   "tagi": [
+    "medal",
+    "mężczyzna",
+    "uśmiech"
+   ],
+   "opis": "zawodnik z medalem, broda, szeroki uśmiech",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933779",
+   "kategoria": "dzieci",
+   "tagi": [
+    "Castle Run",
+    "dzieci",
+    "bieg"
+   ],
+   "opis": "start biegu dzieci, grupa maluchów",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933783",
+   "kategoria": "dzieci",
+   "tagi": [
+    "Castle Run",
+    "dzieci",
+    "rycerze"
+   ],
+   "opis": "dziecko biegnie między kibicami, rycerze w bieli",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933826",
+   "kategoria": "zamek",
+   "tagi": [
+    "zamek",
+    "Nogat",
+    "panorama",
+    "bez ludzi"
+   ],
+   "opis": "panorama zamku nad Nogatem, dramatyczne niebo; tło pod tekst",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933899",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "szosa"
+   ],
+   "opis": "kolarz na rowerze szosowym",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933918",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "emocje",
+    "radość"
+   ],
+   "opis": "kolarz pręży ręce na rowerze",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933924",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "kobieta"
+   ],
+   "opis": "kolarka z flagą, emocje",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933938",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "kobieta"
+   ],
+   "opis": "kolarka na turkusowym rowerze",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1933952",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "przestrzeń",
+    "niebo"
+   ],
+   "opis": "kolarz w oddali, dużo nieba; miejsce na tekst",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1934012",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "emocje",
+    "bulwar"
+   ],
+   "opis": "biegacz z uniesionymi rękami na bulwarze",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1934107",
+   "kategoria": "start",
+   "tagi": [
+    "start",
+    "pianki",
+    "czepki",
+    "Garmin"
+   ],
+   "opis": "pływacy w piankach ustawieni pod bramą Garmin",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1934163",
+   "kategoria": "zamek",
+   "tagi": [
+    "zamek",
+    "bieg",
+    "krajobraz"
+   ],
+   "opis": "mury zamku z biegaczem na ścieżce",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1934191",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "emocje",
+    "mężczyzna"
+   ],
+   "opis": "zawodnik napina bicepsy, uśmiech",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1934212",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "emocje",
+    "zamek"
+   ],
+   "opis": "zawodnik z rękami na głowie na mecie",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1934220",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "rycerze",
+    "czerwony dywan"
+   ],
+   "opis": "finisz na czerwonym dywanie, rycerze unoszą miecze",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1934245",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "rycerze",
+    "emocje"
+   ],
+   "opis": "zawodnik z pięścią w górze, rycerze",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1934254",
+   "kategoria": "medal",
+   "tagi": [
+    "medal",
+    "zmęczenie",
+    "emocje"
+   ],
+   "opis": "wyczerpany zawodnik z medalem",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1934270",
+   "kategoria": "kibice",
+   "tagi": [
+    "kibice",
+    "transparent",
+    "kobieta"
+   ],
+   "opis": "kibicka z transparentem IF TRIATHLON WAS EASY THEY'D CALL IT FOOTBALL",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1934329",
+   "kategoria": "dzieci",
+   "tagi": [
+    "Castle Run",
+    "dzieci",
+    "dziewczynka"
+   ],
+   "opis": "mała dziewczynka z numerem startowym biegnie",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1936988",
+   "kategoria": "dron",
+   "tagi": [
+    "dron",
+    "start",
+    "Nogat",
+    "race",
+    "dym"
+   ],
+   "opis": "z drona: start pływania na Nogacie, race biało-czerwone, tłum",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1936989",
+   "kategoria": "dron",
+   "tagi": [
+    "dron",
+    "zamek",
+    "Nogat",
+    "dym"
+   ],
+   "opis": "z drona: zamek, rzeka, czerwony dym",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937019",
+   "kategoria": "start",
+   "tagi": [
+    "przed startem",
+    "pianka",
+    "emocje"
+   ],
+   "opis": "zawodnik w piance pokazuje znak pokoju w tłumie",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937043",
+   "kategoria": "start",
+   "tagi": [
+    "przed startem",
+    "kobiety",
+    "uśmiech"
+   ],
+   "opis": "dwie zawodniczki w piankach, uśmiech",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937051",
+   "kategoria": "start",
+   "tagi": [
+    "start",
+    "zamek",
+    "tłum",
+    "niebo"
+   ],
+   "opis": "tłum pływaków, wieża zamku, chmury",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937071",
+   "kategoria": "start",
+   "tagi": [
+    "przed startem",
+    "tłum"
+   ],
+   "opis": "profil pływaka w tłumie, rozmyte tło",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937077",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "kibice",
+    "most"
+   ],
+   "opis": "biegacz w białym stroju, kibice na moście",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937114",
+   "kategoria": "strefa_zmian",
+   "tagi": [
+    "strefa zmian",
+    "rower"
+   ],
+   "opis": "zawodnik wyprowadza rower ze strefy zmian",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937150",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "Garmin",
+    "zamek"
+   ],
+   "opis": "finisz z banerem Garmin, zamek",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937181",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "sylwetka",
+    "wiatrak",
+    "czarno-białe"
+   ],
+   "opis": "sylwetka kolarza i turbina wiatrowa, czarno-białe",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937211",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "Żuławy",
+    "wiatraki",
+    "niebo"
+   ],
+   "opis": "kolarz, wiatraki i ptaki na niebie",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937223",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "kobieta",
+    "Garmin",
+    "zamek"
+   ],
+   "opis": "zawodniczka na mecie z taśmą Garmin",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937236",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "czasówka",
+    "wiatraki"
+   ],
+   "opis": "kolarz w pozycji aero, wiatraki",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937290",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "prędkość",
+    "ruch"
+   ],
+   "opis": "kolarz w ruchu, rozmycie tła",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937296",
+   "kategoria": "kibice",
+   "tagi": [
+    "kibice",
+    "transparent",
+    "hasło",
+    "mury"
+   ],
+   "opis": "kibice z transparentem BÓL JEST CHWILOWY, CHWAŁA JEST WIECZNA",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937312",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "prędkość",
+    "pole"
+   ],
+   "opis": "kolarz w ruchu na tle pola",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937346",
+   "kategoria": "rycerze",
+   "tagi": [
+    "rycerze",
+    "noc",
+    "krzyżacy"
+   ],
+   "opis": "rycerze w strojach krzyżackich nocą",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937353",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "noc",
+    "tunel kibiców"
+   ],
+   "opis": "nocny finisz w tunelu z rąk kibiców",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937356",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "zamek"
+   ],
+   "opis": "kolarz w pomarańczowym stroju, zamek w tle",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937363",
+   "kategoria": "start",
+   "tagi": [
+    "przed startem",
+    "kobieta",
+    "portret",
+    "uśmiech"
+   ],
+   "opis": "uśmiechnięta zawodniczka w piance",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937369",
+   "kategoria": "start",
+   "tagi": [
+    "przed startem",
+    "portret",
+    "okulary"
+   ],
+   "opis": "zawodnik poprawia okularki, zbliżenie",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937385",
+   "kategoria": "rycerze",
+   "tagi": [
+    "rycerze",
+    "miecze",
+    "meta"
+   ],
+   "opis": "rycerze w białych płaszczach z mieczami",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937426",
+   "kategoria": "medal",
+   "tagi": [
+    "medal",
+    "detal"
+   ],
+   "opis": "medal i zawodnik za płotkiem, ujęcie detalu",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937435",
+   "kategoria": "dzwon",
+   "tagi": [
+    "dzwon",
+    "medal",
+    "emocje"
+   ],
+   "opis": "zawodnik bije w dzwon z medalem; pod OSTATNI DZWONEK",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937490",
+   "kategoria": "plywanie",
+   "tagi": [
+    "pływanie",
+    "rzeka",
+    "boja"
+   ],
+   "opis": "pływacy na Nogacie, boja",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937498",
+   "kategoria": "plywanie",
+   "tagi": [
+    "pływanie",
+    "z góry",
+    "rozbryzg"
+   ],
+   "opis": "pływak z góry, rozbryzg",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937563",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "aero",
+    "dramatyczne"
+   ],
+   "opis": "kolarz w kasku aero, ujęcie z przodu",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937569",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "emocje"
+   ],
+   "opis": "kolarz z zaciśniętą pięścią",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937613",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "czasówka",
+    "niebo"
+   ],
+   "opis": "kolarz na rowerze czasowym, błękitne niebo",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937631",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "cień",
+    "artystyczne"
+   ],
+   "opis": "cień roweru na asfalcie, ciemne",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937644",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "Żuławy",
+    "wiatraki",
+    "przestrzeń"
+   ],
+   "opis": "mały kolarz na tle wiatraków i chmur; miejsce na tekst",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937708",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "sylwetka",
+    "niebo"
+   ],
+   "opis": "sylwetka kolarza na tle nieba",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937757",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "odbicie",
+    "kałuża"
+   ],
+   "opis": "kolarze odbici w kałuży",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937760",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "kibice",
+    "szpaler"
+   ],
+   "opis": "biegacz mija szpaler kibiców",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937811",
+   "kategoria": "start",
+   "tagi": [
+    "start",
+    "ceremonia",
+    "dym",
+    "rycerze"
+   ],
+   "opis": "zawodnicy pod bramą startową, dym, rycerze",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937812",
+   "kategoria": "start",
+   "tagi": [
+    "start",
+    "ceremonia",
+    "dym",
+    "światło"
+   ],
+   "opis": "start z dymem i światłem",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937813",
+   "kategoria": "start",
+   "tagi": [
+    "start",
+    "ceremonia"
+   ],
+   "opis": "grupa zawodników na starcie",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937864",
+   "kategoria": "plywanie",
+   "tagi": [
+    "pływanie",
+    "rozbryzg",
+    "ciemna woda"
+   ],
+   "opis": "pływak, rozbryzg, ciemna woda",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937870",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "czasówka",
+    "chmury"
+   ],
+   "opis": "kolarz na białym rowerze, chmury",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1937930",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "kukurydza"
+   ],
+   "opis": "kolarz wśród kukurydzy",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938009",
+   "kategoria": "rower",
+   "tagi": [
+    "rower",
+    "dwóch kolarzy"
+   ],
+   "opis": "dwóch kolarzy w pozycji aero",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938052",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "bulwar"
+   ],
+   "opis": "biegacz na bulwarze, pachołki",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938053",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "kobieta",
+    "uśmiech"
+   ],
+   "opis": "biegaczka z kciukami w górze",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938084",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "bulwar",
+    "z góry",
+    "trasa"
+   ],
+   "opis": "bulwar nad Nogatem z biegaczami z góry",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938107",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "niebo",
+    "trzciny"
+   ],
+   "opis": "biegacz na tle nieba i trzcin",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938108",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "kobieta",
+    "trzciny"
+   ],
+   "opis": "biegaczka wśród trzcin",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938116",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "dwoje"
+   ],
+   "opis": "dwoje biegaczy",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938186",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "grupa",
+    "bulwar"
+   ],
+   "opis": "grupa biegaczy na bulwarze",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938199",
+   "kategoria": "kibice",
+   "tagi": [
+    "kibice",
+    "transparent"
+   ],
+   "opis": "kibice z transparentem",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938204",
+   "kategoria": "bieg",
+   "tagi": [
+    "bieg",
+    "uśmiech",
+    "mury"
+   ],
+   "opis": "biegacz z uśmiechem, ceglane tło",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938208",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "uścisk",
+    "emocje"
+   ],
+   "opis": "uścisk dwóch osób na mecie",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938217",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "rycerze",
+    "czerwony dywan"
+   ],
+   "opis": "finiszerzy na czerwonym dywanie, rycerze z mieczami",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938271",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "emocje",
+    "radość"
+   ],
+   "opis": "finiszer z szeroko rozłożonymi rękami",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938279",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "emocje",
+    "zamek"
+   ],
+   "opis": "zawodnik z pięściami w górze, zamek",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938281",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "Garmin",
+    "emocje"
+   ],
+   "opis": "zawodnik patrzy w górę, Garmin",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938293",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "krzyk",
+    "rycerze"
+   ],
+   "opis": "krzyk radości, pięść w górze",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938295",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "emocje",
+    "zamek"
+   ],
+   "opis": "zawodnik pręży muskuły, zamek",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938322",
+   "kategoria": "medal",
+   "tagi": [
+    "medal",
+    "kobieta",
+    "radość"
+   ],
+   "opis": "zawodniczka z warkoczami i medalem, śmiech",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938410",
+   "kategoria": "dzwon",
+   "tagi": [
+    "dzwon",
+    "krzyk",
+    "emocje"
+   ],
+   "opis": "zawodnik krzyczy i bije w dzwon",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938414",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "noc",
+    "tunel kibiców",
+    "czerwony dywan"
+   ],
+   "opis": "nocny finisz, tunel z rąk, czerwony dywan",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938418",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "noc",
+    "tunel kibiców"
+   ],
+   "opis": "nocny finisz, biegacz w tunelu z rąk",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  },
+  {
+   "id": "1938419",
+   "kategoria": "meta",
+   "tagi": [
+    "meta",
+    "noc",
+    "tunel kibiców"
+   ],
+   "opis": "nocny finisz, zawodnik w tunelu",
+   "orientacja": "poziom",
+   "rozmiar": "1300x866"
+  }
+ ]
+}

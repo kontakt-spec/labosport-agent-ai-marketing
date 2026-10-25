@@ -1,0 +1,28 @@
+{
+  "slug": "psg-garmin-polmaraton-gdansk",
+  "nazwa": "PSG Garmin Półmaraton Gdańsk",
+  "skrot": "GPG",
+  "dyscyplina": "bieg uliczny",
+  "data_start": "2027-09-25",
+  "data_koniec": "2027-09-26",
+  "daty_tekst": "25-26 września 2027",
+  "miejsce": "Gdańsk",
+  "edycja_rzymska": "XIV",
+  "dystanse_opis": "półmaraton 21,0975 km (26.09), sztafety 4-osobowe, Melvit Nocna Piątka 5 km i biegi dzieci (25.09)",
+  "linki": {
+    "strona": "https://polmaratongdansk.pl",
+    "zapisy": "https://polmaratongdansk.pl/formularz-zgloszeniowy/",
+    "instagram": "https://www.instagram.com/polmaratongdansk/",
+    "facebook": "https://www.facebook.com/polmaratongdansk"
+  },
+  "kanaly": [
+    "instagram",
+    "facebook"
+  ],
+  "zakazane_slowa": [],
+  "styl_opisow": {
+    "max_emoji": 14,
+    "max_hashtagi": 6
+  },
+  "status_danych": "szkic: uzupełnij dokumenty w 01 Informacje o evencie, a agent uzupełni ten plik"
+}

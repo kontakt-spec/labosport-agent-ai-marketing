@@ -1,0 +1,25 @@
+{
+  "slug": "garmin-mtb-series",
+  "nazwa": "Garmin MTB Series",
+  "skrot": "GMS",
+  "dyscyplina": "MTB",
+  "daty_tekst": "2027 do potwierdzenia (2026: Gdynia 26-28.06 z UCI MTB Eliminator World Cup)",
+  "miejsce": "Gdynia (wcześniej Elbląg, Gdańsk, Sopot)",
+  "dystanse_opis": "do uzupełnienia",
+  "linki": {
+    "strona": "https://mtbseries.pl",
+    "zapisy": "https://mtbseries.pl",
+    "instagram": "https://www.instagram.com/garminmtbseries/",
+    "facebook": "https://www.facebook.com/garminmtbseries"
+  },
+  "kanaly": [
+    "instagram",
+    "facebook"
+  ],
+  "zakazane_slowa": [],
+  "styl_opisow": {
+    "max_emoji": 14,
+    "max_hashtagi": 6
+  },
+  "status_danych": "szkic: uzupełnij dokumenty w 01 Informacje o evencie, a agent uzupełni ten plik"
+}

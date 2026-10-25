@@ -1,0 +1,139 @@
+{
+  "opis": "Eventy LABOSPORT obsługiwane przez agenta. Folder roboczy dostaje folder dla każdego z nich. Nowy event: /labosport:nowy-event albo nowy wpis tutaj i w folderze eventy/.",
+  "eventy": [
+    {
+      "slug": "castle-triathlon-malbork",
+      "nazwa": "Castle Triathlon Malbork",
+      "skrot": "CTM",
+      "aliasy": [
+        "Castle Triathlon",
+        "Malbork",
+        "CTM",
+        "Castle Run"
+      ],
+      "status": "gotowy"
+    },
+    {
+      "slug": "psg-garmin-polmaraton-gdansk",
+      "nazwa": "PSG Garmin Półmaraton Gdańsk",
+      "skrot": "GPG",
+      "aliasy": [
+        "Półmaraton Gdańsk",
+        "PG",
+        "GPG",
+        "Nocna Piątka",
+        "Polmaraton Gdansk"
+      ],
+      "status": "szkic"
+    },
+    {
+      "slug": "garmin-ultra-race",
+      "nazwa": "Garmin Ultra Race",
+      "skrot": "GUR",
+      "aliasy": [
+        "GUR",
+        "Ultra Race",
+        "Garmin Ultra Race Gdańsk",
+        "Garmin Ultra Race Radków"
+      ],
+      "status": "szkic"
+    },
+    {
+      "slug": "garmin-triathlon-tour",
+      "nazwa": "Garmin Triathlon Tour",
+      "skrot": "GTT",
+      "aliasy": [
+        "GTT",
+        "Triathlon Tour",
+        "GIT",
+        "Garmin Iron Triathlon"
+      ],
+      "status": "szkic"
+    },
+    {
+      "slug": "ultra-wysoczyzna",
+      "nazwa": "Meble Wójcik Ultra Wysoczyzna",
+      "skrot": "UW",
+      "aliasy": [
+        "UW",
+        "Ultra Wysoczyzna",
+        "Wysoczyzna"
+      ],
+      "status": "szkic"
+    },
+    {
+      "slug": "aqua-speed-open-water-series",
+      "nazwa": "Aqua Speed Open Water Series",
+      "skrot": "ASOWS",
+      "aliasy": [
+        "ASOWS",
+        "Open Water Series",
+        "Aqua Speed"
+      ],
+      "status": "szkic"
+    },
+    {
+      "slug": "elemental-tri-series",
+      "nazwa": "Elemental Tri Series",
+      "skrot": "ETS",
+      "aliasy": [
+        "ETS",
+        "ETC",
+        "Tri Series",
+        "Elemental"
+      ],
+      "status": "szkic"
+    },
+    {
+      "slug": "garmin-triminator-radkow",
+      "nazwa": "Garmin Triminator Radków",
+      "skrot": "GTR",
+      "aliasy": [
+        "Triminator",
+        "GTR"
+      ],
+      "status": "szkic"
+    },
+    {
+      "slug": "garmin-gravel-race",
+      "nazwa": "Garmin Gravel Race",
+      "skrot": "GGR",
+      "aliasy": [
+        "Gravel Race",
+        "GGR"
+      ],
+      "status": "szkic"
+    },
+    {
+      "slug": "garmin-mtb-series",
+      "nazwa": "Garmin MTB Series",
+      "skrot": "GMS",
+      "aliasy": [
+        "MTB Series",
+        "GMS"
+      ],
+      "status": "szkic"
+    },
+    {
+      "slug": "triathlon-rzeszow",
+      "nazwa": "Triathlon Rzeszów",
+      "skrot": "ETC Rzeszów",
+      "aliasy": [
+        "Rzeszów",
+        "Europe Triathlon Cup Rzeszów"
+      ],
+      "status": "szkic"
+    },
+    {
+      "slug": "labosport",
+      "nazwa": "LABOSPORT (profil firmy)",
+      "skrot": "LABO",
+      "aliasy": [
+        "LABOSPORT",
+        "Labosport Polska",
+        "profil firmy"
+      ],
+      "status": "szkic"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "slug": "elemental-tri-series",
+  "nazwa": "Elemental Tri Series",
+  "skrot": "ETS",
+  "dyscyplina": "triathlon (Puchar Europy, Mistrzostwa Polski)",
+  "daty_tekst": "2027 do potwierdzenia",
+  "miejsce": "2026: Olsztyn 23.05 (Europe Triathlon Cup), Białystok 16.08 (MP standard)",
+  "dystanse_opis": "sprint, olimpijski, paratriathlon, aquabike, Elemental Kids",
+  "linki": {
+    "strona": "https://triathlonseries.pl",
+    "zapisy": "https://triathlonseries.pl",
+    "instagram": "https://www.instagram.com/elementaltriseries/",
+    "facebook": "https://www.facebook.com/triathlonseriespl"
+  },
+  "kanaly": [
+    "instagram",
+    "facebook"
+  ],
+  "zakazane_slowa": [],
+  "styl_opisow": {
+    "max_emoji": 14,
+    "max_hashtagi": 6
+  },
+  "status_danych": "szkic: uzupełnij dokumenty w 01 Informacje o evencie, a agent uzupełni ten plik"
+}

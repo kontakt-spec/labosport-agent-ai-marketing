@@ -1,0 +1,94 @@
+# Czarna lista zwrotów. Każda linia to fraza (małe litery, bez znaczenia wielkość liter w tekście).
+# Sekcja BŁĘDY: tekst z taką frazą nie przechodzi kontroli.
+# Sekcja UWAGI: kontroler musi ocenić, czy fraza jest uzasadniona.
+# Edytujesz ten plik, a skrypt lab.py lint od razu bierze nowe frazy.
+
+# BŁĘDY
+w dzisiejszym dynamicznym świecie
+w dzisiejszych czasach
+w dynamicznie zmieniającym się
+to coś więcej niż
+coś więcej niż tylko
+nie tylko sport, ale
+zanurz się
+odkryj magię
+magiczna atmosfera
+magiczne chwile
+niezapomniane wrażenia
+niezapomniana przygoda
+niezapomniane chwile
+niezapomniane emocje
+wyjątkowa okazja, by
+podróż pełna
+pełen emocji
+pełna emocji
+emocje gwarantowane
+gwarancja niezapomnianych
+przygotuj się na niezapomniany
+przenieś się w
+daj się porwać
+poczuj magię
+w samym sercu
+serce i dusza
+holistyczn
+synergi
+innowacyjn
+rewolucyjn
+kluczowy element
+kluczową rolę
+warto podkreślić
+warto zaznaczyć
+warto wspomnieć
+co więcej,
+ponadto,
+podsumowując,
+reasumując
+nie ma lepszego sposobu
+idealne połączenie
+idealna okazja
+na najwyższym poziomie
+z pasją i zaangażowaniem
+pasja, determinacja
+determinacja i pasja
+twoja historia zaczyna się
+napisz swoją historię
+twoja przygoda zaczyna się
+twoja podróż
+the journey
+unleash
+elevate
+game changer
+let's go!
+# Polskie kalki z angielskiego i "LinkedInowe" otwarcia
+czy jesteś gotowy na
+czy jesteś gotowa na
+gotowy na wyzwanie?
+gotowa na wyzwanie?
+a ty?
+nie czekaj, dołącz
+nie zwlekaj
+dołącz do nas już dziś
+
+# UWAGI
+wyjątkow
+niezwykł
+fascynując
+inspirując
+niesamowit
+epick
+legendarn
+historyczn
+emocjonując
+niepowtarzaln
+spektakularn
+przygod
+wyzwanie
+motywacj
+nie przegap
+nie zwlekaj
+czas na
+już teraz
+sprawdź się
+przekrocz swoje granice
+pokonaj swoje słabości
+granice możliwości

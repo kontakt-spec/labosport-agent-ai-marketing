@@ -1,0 +1,25 @@
+{
+  "slug": "garmin-triathlon-tour",
+  "nazwa": "Garmin Triathlon Tour",
+  "skrot": "GTT",
+  "dyscyplina": "triathlon (cykl 12 zawodów)",
+  "daty_tekst": "kalendarz 2027 w przygotowaniu",
+  "miejsce": "2026: Żyrardów, Olsztyn, Charzykowy, Ślesin, Skierniewice, Gołdap, Syców, Rawa Mazowiecka, Elbląg, Serock, Stężyca, Płock (finał)",
+  "dystanse_opis": "1/8, 1/4, 1/2, sztafety (#GoTriTogether), Garmin Junior",
+  "linki": {
+    "strona": "https://triathlontour.pl",
+    "zapisy": "https://triathlontour.pl/zapisy/",
+    "instagram": "https://www.instagram.com/garmintriathlontour/",
+    "facebook": "https://www.facebook.com/garmintriathlontour"
+  },
+  "kanaly": [
+    "instagram",
+    "facebook"
+  ],
+  "zakazane_slowa": [],
+  "styl_opisow": {
+    "max_emoji": 14,
+    "max_hashtagi": 6
+  },
+  "status_danych": "szkic: uzupełnij dokumenty w 01 Informacje o evencie, a agent uzupełni ten plik"
+}
