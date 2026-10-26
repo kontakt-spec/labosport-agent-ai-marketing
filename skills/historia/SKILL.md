@@ -5,9 +5,11 @@ description: Nauka z historii eventu LABOSPORT: analiza dotychczasowych grafik w
 
 # Historia eventu: jak to było robione
 
-Cel: agent ma planować tak, jak LABOSPORT planowałby sam. Wynik ląduje w `<event>/profil-eventu.md`, `<event>/event.json` i `<event>/03 Zdjęcia/_katalog.json`. Wzór dobrze uzupełnionego profilu: `${CLAUDE_PLUGIN_ROOT}/eventy/castle-triathlon-malbork/profil-eventu.md`.
+Cel: agent ma planować tak, jak LABOSPORT planowałby sam. Wynik: nowe wersje `Profil eventu`, `event.json` i `_katalog zdjęć.json`, przygotowane w kopii roboczej (`$LAB robocze <EVENT>`) i zapisane na Dysku Google (`${CLAUDE_PLUGIN_ROOT}/wiedza/dysk.md`, G). Wzór dobrze uzupełnionego profilu: `${CLAUDE_PLUGIN_ROOT}/eventy/castle-triathlon-malbork/profil-eventu.md`.
 
-**Tylko odczyt.** W Canvie: `search-designs`, `search-folders`, `list-folder-items`, `read-design` (bez transakcji). W Postiz: `integrationList`, `postsListTool`. Nic nie tworzysz, nie edytujesz, nie przenosisz.
+**Tylko odczyt.** W Canvie: `search-designs`, `search-folders`, `list-folder-items`, `read-design` (bez transakcji). W Postiz: `integrationList`, `postsListTool`. Na Dysku: `search_files`, `read_file_content`, `download_file_content`. Nic nie tworzysz, nie edytujesz, nie przenosisz. Jako agent zapisujesz tylko w kopii roboczej; na Dysk zapisuje koordynator.
+
+Zacznij od tego, co już jest na Dysku: `Zmiany dla Agenta AI`, obecny `Profil eventu`, `event.json` i katalog zdjęć (dysk.md, B i C). Uzupełniasz, nie zaczynasz od zera.
 
 `LAB="python3 -I ${CLAUDE_PLUGIN_ROOT}/skrypty/lab.py"`
 
@@ -26,14 +28,15 @@ Cel: agent ma planować tak, jak LABOSPORT planowałby sam. Wynik ląduje w `<ev
 1. `integrationList`, kanały eventu. `postsListTool` za ostatnie 6-12 miesięcy. Ustal: dni i godziny publikacji, liczba postów tygodniowo w okresach sprzedaży i poza nimi, typowe formuły CTA, czy jest pierwszy komentarz.
 2. Opcjonalnie publiczny profil Instagram (przeglądarka, bez logowania i bez interakcji): ostatnie 10-20 opisów. Zapisz cechy (długość, emoji, hashtagi, formuły), nie kopiuj całych opisów do plików.
 
-## 3. Zdjęcia z dysku
+## 3. Zdjęcia z Dysku
 
-1. `$LAB miniatury <EVENT>` (miniatury w `03 Zdjęcia/_miniatury/`).
-2. Przejrzyj miniatury narzędziem Read (po kilkanaście). Dla każdego zdjęcia: `kategoria` (plywanie, rower, bieg, meta, start, dzieci, kibice, medal, miejsce, dron, inne), `tagi`, krótki `opis`, `orientacja`.
-3. Zapisz `03 Zdjęcia/_katalog.json` w formacie katalogu CTM (`{"uwagi": "...", "kategorie": [...], "zdjecia": [{"id", "kategoria", "tagi", "opis", "orientacja", "rozmiar"}]}`).
+1. Lista zdjęć: `search_files` w folderze `03 ZDJĘCIA` (`excludeContentSnippets: true`, kolejne strony przez `nextPageToken`). Zdjęcia, które są już w katalogu, pomijasz.
+2. Nowe zdjęcia oglądasz po kilkanaście: `read_file_content` na zdjęciu (JPEG, PNG) albo pobranie do kopii roboczej (dysk.md, F) i `$LAB miniatury <EVENT>`, potem Read miniatur. Pliki z kopii roboczej usuwasz po przejrzeniu.
+3. Dla każdego zdjęcia: `id` (nazwa pliku bez rozszerzenia), `kategoria` (plywanie, rower, bieg, meta, start, dzieci, kibice, medal, miejsce, dron, inne), `tagi`, krótki `opis`, `orientacja`, `rozmiar`.
+4. Zapisz w kopii roboczej `<03>/_katalog zdjęć.json` w formacie katalogu CTM (`{"uwagi": "...", "kategorie": [...], "zdjecia": [{"id", "kategoria", "tagi", "opis", "orientacja", "rozmiar"}]}`).
 
-## 4. Zapis
+## 4. Zapis (w kopii roboczej, potem koordynator na Dysk)
 
-- `profil-eventu.md`: sekcje jak w profilu CTM (tożsamość, stan sprzedaży, ostatnia aktywność, system wizualny, wzorce w Canvie z ID stron, bank nagłówków, opisy, zdjęcia, pytania otwarte). Status zmień z „szkic” na datę aktualizacji.
+- `profil-eventu.md` (na Dysku Dokument Google `Profil eventu`): sekcje jak w profilu CTM (tożsamość, stan sprzedaży, ostatnia aktywność, system wizualny, wzorce w Canvie z ID stron, bank nagłówków, opisy, zdjęcia, pytania otwarte). Status zmień z „szkic” na datę aktualizacji.
 - `event.json`: uzupełnij `styl_opisow` (hashtagi, emoji marki, formuła komentarza), `linki`, `hashtagi`, `zakazane_slowa`, sekcję `canva` (ID projektu źródłowego i stron wzorców).
 - Krótkie podsumowanie dla koordynatora: 5-8 punktów, co jest charakterystyczne i co z tego wynika dla planu.

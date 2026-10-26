@@ -1,6 +1,6 @@
 # Playbook komunikacji eventów LABOSPORT
 
-Tak LABOSPORT komunikuje imprezy. Zasady wyciągnięte z 222 grafik Castle Triathlon Malbork 2026, z pozostałych projektów w Canvie i z audytu. Planista stosuje je do każdego eventu, a szczegóły bierze z `profil-eventu.md` i `event.json` danego wydarzenia.
+Tak LABOSPORT komunikuje imprezy. Zasady wyciągnięte z 222 grafik Castle Triathlon Malbork 2026, z pozostałych projektów w Canvie i z audytu. Planista stosuje je do każdego eventu, a szczegóły bierze z `Profil eventu` i `event.json` danego wydarzenia (Dysk Google).
 
 ## 1. Cztery rodzaje treści
 

@@ -4,14 +4,16 @@ import type { Register } from 'claude-code'
 import type { AgentNaZywo, Dzialanie, StanPanelu } from '../types'
 
 // Panel "Agent AI Marketing": pokazuje etapy pracy, zespół agentów i ostatnie
-// działania w Canvie i Postiz. Źródłem prawdy jest _system/stan.json w folderze
-// roboczym (pisze go skrypt lab.py stan); wywołania narzędzi widzimy na żywo.
+// działania na Dysku Google, w Canvie i Postiz. Dane LABOSPORT są tylko na wspólnym
+// Dysku Google (konektor); postęp pracy na tym komputerze to ~/.labosport/stan.json
+// (pisze go lab.py stan), a wywołania narzędzi widzimy na żywo.
 
 const PANE = 'labosport-agenci'
 const TYTUL = 'Agent AI Marketing'
 
 const stanA = atom({ plugin: 'labosport', key: 'stan' } as const, null)
 const wsA = atom({ plugin: 'labosport', key: 'workspace' } as const, null)
+const linkA = atom({ plugin: 'labosport', key: 'link' } as const, null)
 const agenciA = atom({ plugin: 'labosport', key: 'agenci' } as const, [])
 const dzialaniaA = atom({ plugin: 'labosport', key: 'dzialania' } as const, [])
 
@@ -58,6 +60,17 @@ const CANVA: Record<string, string> = {
   'get-assets': 'sprawdzam zdjęcia',
 }
 
+const DYSK: Record<string, string> = {
+  search_files: 'szukam plików',
+  read_file_content: 'czytam dokument',
+  download_file_content: 'pobieram plik',
+  get_file_metadata: 'sprawdzam plik',
+  create_file: 'zapisuję plik',
+  update_file: 'porządkuję plik',
+  copy_file: 'kopiuję plik',
+  list_recent_files: 'przeglądam ostatnie pliki',
+}
+
 const POSTIZ: Record<string, string> = {
   integrationList: 'sprawdzam kanały',
   integrationSchema: 'sprawdzam ustawienia kanału',
@@ -85,7 +98,7 @@ function katalog(sciezka: string): string {
 
 export const register: Register = on => {
   let ostatniStan = -1
-  let sciezkaStanu: string | null = null
+  let ostatniKonfig = -1
 
   on('session.start', async ($, e, next) => {
     const wynik = await next(e)
@@ -96,15 +109,17 @@ export const register: Register = on => {
     })
 
     const home = await $.env.get('HOME')
+    const konfig = `${home}/.labosport/config.json`
+    const sciezkaStanu = `${home}/.labosport/stan.json`
     const odswiez = async () => {
       try {
-        if (sciezkaStanu === null) {
-          const konfig = `${home}/.labosport/config.json`
-          if (!(await $.fs.exists(konfig))) return
-          const ws = JSON.parse(await $.fs.read(konfig)).workspace as string | undefined
-          if (!ws) return
-          await update($, wsA, () => ws)
-          sciezkaStanu = `${ws}/_system/stan.json`
+        if (!(await $.fs.exists(konfig))) return
+        const k = await $.fs.stat(konfig)
+        if (k.mtimeMs !== ostatniKonfig) {
+          ostatniKonfig = k.mtimeMs
+          const dane = JSON.parse(await $.fs.read(konfig)) as { dysk?: { nazwa?: string; link?: string } }
+          await update($, wsA, () => dane.dysk?.nazwa ?? null)
+          await update($, linkA, () => dane.dysk?.link ?? null)
         }
         if (!(await $.fs.exists(sciezkaStanu))) return
         const { mtimeMs } = await $.fs.stat(sciezkaStanu)
@@ -152,7 +167,13 @@ export const register: Register = on => {
     }
 
     const krotka = narzedzie.includes('__') ? narzedzie.slice(narzedzie.lastIndexOf('__') + 2) : narzedzie
-    const opis = CANVA[krotka] ? `Canva: ${CANVA[krotka]}` : POSTIZ[krotka] ? `Postiz: ${POSTIZ[krotka]}` : null
+    const opis = CANVA[krotka]
+      ? `Canva: ${CANVA[krotka]}`
+      : POSTIZ[krotka]
+        ? `Postiz: ${POSTIZ[krotka]}`
+        : DYSK[krotka]
+          ? `Dysk: ${DYSK[krotka]}`
+          : null
     if (opis) {
       const wpis: Dzialanie = { czas: await $.clock.now(), tekst: opis }
       await update($, dzialaniaA, lista => [...(lista ?? []), wpis].slice(-12))
@@ -164,6 +185,7 @@ export const register: Register = on => {
     const { Box, Text, Button } = $.ui.resolve(e)
     const stan = await read($, stanA)
     const ws = await read($, wsA)
+    const link = await read($, linkA)
     const agenci = (await read($, agenciA)) ?? []
     const dzialania = (await read($, dzialaniaA)) ?? []
     const szer = e.props.bodyColumns ?? 40
@@ -173,7 +195,7 @@ export const register: Register = on => {
         <Box flexDirection="column" gap={1}>
           <Text bold>LABOSPORT · Agent AI Marketing</Text>
           <Text dimColor>
-            System nie jest jeszcze skonfigurowany. Konfiguracja zakłada folder roboczy z folderami eventów i
+            System nie jest jeszcze podłączony. Konfiguracja znajduje wspólny folder LABOSPORT na Dysku Google i
             podłącza Canvę oraz Postiz.
           </Text>
           <Button key="start" variant="primary" onPress={() => $.prompt.submit({ text: '/labosport:start' })}>
@@ -193,6 +215,7 @@ export const register: Register = on => {
         <Box flexDirection="column">
           <Text bold>{stan?.event ?? 'Brak aktywnej kampanii'}</Text>
           {stan?.kampania && <Text dimColor>{stan.kampania}</Text>}
+          <Text dimColor>Dysk Google: {ws}</Text>
         </Box>
 
         {stan?.czeka_na && (
@@ -262,14 +285,11 @@ export const register: Register = on => {
               Otwórz plan
             </Button>
           )}
-          {stan?.plan_canva && (
-            <Button key="canva" onPress={() => $.process.run(['open', stan.plan_canva ?? ''])}>
-              Plan w Canvie
+          {link && (
+            <Button key="folder" onPress={() => $.process.run(['open', link])}>
+              Dysk Google
             </Button>
           )}
-          <Button key="folder" onPress={() => $.process.run(['open', ws])}>
-            Folder eventów
-          </Button>
           <Button key="dalej" variant="primary" onPress={() => $.prompt.submit({ text: '/labosport:marketing Co dalej?' })}>
             Co dalej?
           </Button>

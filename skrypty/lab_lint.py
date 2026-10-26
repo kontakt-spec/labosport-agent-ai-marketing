@@ -39,7 +39,8 @@ def _emoji(znak):
 EMOJI_AI = set("✨🚀💡🎯💫🤩🌈")
 
 
-def sprawdz(tekst, rodzaj="opis", zakazane=None, max_emoji=12, max_hashtagi=6, max_znakow_linii=None):
+def sprawdz(tekst, rodzaj="opis", zakazane=None, max_emoji=12, max_hashtagi=6, max_znakow_linii=None,
+            czarna_lista=None):
     """rodzaj: "opis" (caption), "naglowek" (tekst na grafice), "komentarz".
 
     Limity emoji i hashtagow ustawia event (event.json, sekcja styl_opisow), bo LABOSPORT
@@ -49,7 +50,7 @@ def sprawdz(tekst, rodzaj="opis", zakazane=None, max_emoji=12, max_hashtagi=6, m
     if rodzaj == "naglowek":
         max_emoji = 0
     niski = tekst.lower()
-    czarne_b, czarne_u = wczytaj_czarna_liste()
+    czarne_b, czarne_u = wczytaj_czarna_liste(czarna_lista or CZARNA_LISTA)
 
     if "—" in tekst:
         bledy.append("pauza (em dash) w tekscie; zamien na przecinek, kropke albo dwukropek")

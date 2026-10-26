@@ -1,11 +1,10 @@
 export type StatusEtapu = 'czeka' | 'w_toku' | 'gotowe' | 'blad' | 'pominiete'
 
-/** Zawartość `_system/stan.json` w folderze roboczym; pisze ją `lab.py stan`. */
+/** Zawartość `~/.labosport/stan.json` (postęp pracy na tym komputerze); pisze ją `lab.py stan`. */
 export type StanPanelu = {
   event?: string
   kampania?: string
   plan?: string
-  plan_canva?: string
   etap?: string
   etapy?: Record<string, StatusEtapu>
   postep?: { zrobione?: number; wszystkie?: number; opis?: string }
@@ -25,6 +24,7 @@ declare module 'claude-code' {
     labosport: {
       stan: StanPanelu | null
       workspace: string | null
+      link: string | null
       agenci: AgentNaZywo[]
       dzialania: Dzialanie[]
     }

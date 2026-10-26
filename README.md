@@ -2,12 +2,12 @@
 
 System AI, który przygotowuje komunikację eventów LABOSPORT Polska w social mediach: planuje posty, robi grafiki w Canvie na szablonach LABOSPORT, pisze opisy w ich stylu i wrzuca szkice postów do Postiz. Na każdym etapie decyduje człowiek.
 
-Wersja 0.1 · przygotowane przez Pawła Czapczyka (ScaleUP AI) dla LABOSPORT Polska.
+Wersja 0.3 · przygotowane przez Pawła Czapczyka (ScaleUP AI) dla LABOSPORT Polska.
 
 ## Jak to działa
 
 ```
- 1. Dane eventu          folder eventu: informacje, progi cenowe, logo, zdjęcia
+ 1. Dane eventu          wspólny Dysk Google: informacje, progi cenowe, logo, zdjęcia
  2. Plan                 agent planuje posty, karuzele, stories i rolki na wybrany okres
  ✓  Akceptujecie plan    podgląd planu w przeglądarce, decyzje jednym kliknięciem
  3. Grafiki i opisy      Canva (Wasze szablony, Wasze zdjęcia) + opisy w Waszym stylu
@@ -16,13 +16,13 @@ Wersja 0.1 · przygotowane przez Pawła Czapczyka (ScaleUP AI) dla LABOSPORT Pol
  5. Publikacja           Wy planujecie publikację w Postiz; stories dostajecie jako pliki
 ```
 
-**Jeden plan w chmurze.** Każdy plan kampanii jest zapisany w Canvie, w folderze `Agent AI Marketing/<event>/<kampania>`, razem z grafikami tej kampanii. Agent na każdym komputerze pobiera plan stamtąd, więc cały zespół pracuje na tym samym planie i nikt nie zrobi drugiego planu na ten sam okres.
+**Wszystko na wspólnym Dysku Google.** Dane eventów, baza wiedzy, poprawki zespołu (`Zmiany dla Agenta AI`) i plany kampanii są w jednym folderze LABOSPORT na Dysku Google działu marketingu. Agent czyta i zapisuje go konektorem Google Drive, więc każda osoba z zespołu, na każdym komputerze, pracuje na tych samych danych. Na komputerach nic nie zostaje. Przed nowym planem agent sprawdza, czy plan na ten okres już jest, a gdy ktoś pracuje na planie, plik jest zablokowany dla innych.
 
 Zespół agentów: **Analityk** (uczy się z historii eventu), **Planista**, **Grafik**, **Copywriter**, **Kontroler**, **Wydawca**. Panel „Agent AI Marketing” obok rozmowy pokazuje etap, postęp i to, który agent pracuje.
 
 ## Instalacja
 
-Potrzebne: aplikacja Claude (zakładka Code) albo Claude Code, konto Claude Pro lub wyższe, konto Canva LABOSPORT, konto Postiz LABOSPORT, Python 3.9+ (jest na każdym Macu).
+Potrzebne: aplikacja Claude (zakładka Code) albo Claude Code, konto Claude Pro lub wyższe, konektor Google Drive w Claude zalogowany kontem Google z dostępem do folderu marketingu (prawo edycji), konto Canva LABOSPORT, konto Postiz LABOSPORT, Python 3.9+ (jest na każdym Macu).
 
 **Najprościej:** w zakładce Code napisz do Claude:
 
@@ -42,15 +42,16 @@ claude plugin install labosport@labosport-ai
 
 **W terminalu Claude Code:** `/plugin install labosport --marketplace kontakt-spec/labosport-agent-ai-marketing`
 
-Repozytorium jest prywatne: instalacja działa na komputerze, na którym zalogowany jest GitHub z dostępem do repozytorium (`gh auth login`).
+Gdy repozytorium jest prywatne, instalacja działa na komputerze, na którym zalogowany jest GitHub z dostępem do repozytorium (`gh auth login`).
 
 ## Pierwsze uruchomienie
 
 Wpisz `/labosport:start`. Agent:
 1. przedstawi system,
-2. założy folder roboczy z folderami wszystkich eventów (najlepiej na wspólnym Dysku Google, żeby każdy komputer widział te same dane),
-3. poprosi o zalogowanie do Canvy i Postiz (okienka logowania otwierają się same),
-4. pokaże, czego brakuje w danych eventów.
+2. sprawdzi konektor Google Drive i znajdzie wspólny folder LABOSPORT na Dysku (bez zakładania niczego na komputerze),
+3. za Waszą zgodą dołoży na Dysku to, czego brakuje (baza wiedzy, `event.json`, `Profil eventu`, `04 Plany i kampanie`), bez zmieniania Waszych folderów,
+4. poprosi o zalogowanie do Canvy i Postiz (okienka logowania otwierają się same),
+5. pokaże, czego brakuje w danych eventów.
 
 ## Komendy
 
@@ -69,22 +70,31 @@ Wpisz `/labosport:start`. Agent:
 
 Można też pisać normalnie: „Zaplanuj komunikację Castle Triathlon Malbork na grudzień”, „Co dalej?”, „Wrzuć zaakceptowane posty do Postiz”.
 
-## Folder roboczy
+## Na Dysku Google
 
 ```
-LABOSPORT Marketing/
-  Jak korzystać.md
-  _system/                     stan pracy (czyta go panel), eventy dodane przez Was
+<folder LABOSPORT>/                      np. LABOSPORT Marketing AI
+  Zmiany dla Agenta AI                   Wasze poprawki dla agenta (czyta je przed każdym zadaniem)
+  Jak korzystać                          instrukcja
+  00 Baza wiedzy/                        kontekst firmy, playbook, głos marki, czarna lista (Dokumenty Google)
+  Inne potrzebne dane/
   Castle Triathlon Malbork/
-    01 Informacje o evencie/   Wasze dokumenty
-    02 Grafiki/                logo, sponsorzy, przykładowe grafiki, archiwalne stories
-    03 Zdjęcia/                zdjęcia z poprzednich edycji (+ katalog tagów agenta)
-    04 Plany i kampanie/       plany, opisy, eksporty grafik, paczki stories
-    event.json                 dane eventu dla agenta
-    profil-eventu.md           jak event się komunikuje (styl, wzorce, nagłówki)
+    Informacje o evencie/
+      01 INFORMACJE O EVENCIE/           Wasze dokumenty
+      02 GRAFIKI/                        logo, sponsorzy, przykładowe grafiki
+      03 ZDJĘCIA/                        zdjęcia (+ katalog zdjęć od agenta)
+    event.json                           dane eventu dla agenta
+    Profil eventu                        jak event się komunikuje (styl, wzorce, nagłówki)
+    04 Plany i kampanie/
+      2026-11 listopad i grudzień/
+        plan v3 (2026-11-01 do 2026-12-31).json   aktualny plan
+        archiwum/                                 poprzednie wersje
+        Stories 2026-11 listopad i grudzień       harmonogram stories
   PSG Garmin Półmaraton Gdańsk/
   ...
 ```
+
+Na komputerze zostaje tylko `~/.labosport` (który folder, imię osoby, stan panelu). Skrypty liczą na chwilowej kopii w folderze tymczasowym systemu, którą agent czyści po zapisie na Dysk.
 
 ## W Canvie
 
@@ -93,19 +103,18 @@ Agent AI Marketing/
   CTM 2027/
     _wzorce/                         układy grafik skopiowane z Waszych projektów
     2026-11 listopad i grudzień/     jedna kampania = jeden folder
-      CTM2027_PLAN_2026-11           plan (oryginał, z którego korzysta każdy komputer)
       CTM2027_posty_2026-11          grafiki postów tej kampanii
       CTM2027_stories_2026-11        stories
 ```
 
-Agent pracuje tylko w folderze `Agent AI Marketing`. Wasze projekty czyta i kopiuje, nigdy ich nie zmienia. Grafiki powstają na Waszych układach: kopia sprawdzonej strony, nowy tekst, nowe zdjęcie. Projekt planu pokazuje listę postów ze statusami; dane dla agenta są w notatkach stron, więc nie usuwajcie stron ani notatek planu.
+Agent pracuje tylko w folderze `Agent AI Marketing`. Wasze projekty czyta i kopiuje, nigdy ich nie zmienia. Grafiki powstają na Waszych układach: kopia sprawdzonej strony, nowy tekst, nowe zdjęcie. Folder kampanii w Canvie ma tę samą nazwę co na Dysku, a ID grafik są zapisane w planie.
 
 ## Prywatność i dane
 
-Dane eventów zostają na Waszym dysku. Canva i Postiz łączą się przez oficjalne serwery tych firm (logowanie OAuth, bez kopiowania haseł i kluczy). Agent nie publikuje niczego sam: posty trafiają do Postiz jako szkice.
+Dane eventów zostają na Waszym Dysku Google. Dysk, Canva i Postiz łączą się przez oficjalne konektory (logowanie OAuth, bez kopiowania haseł i kluczy). Agent nie publikuje niczego sam: posty trafiają do Postiz jako szkice.
 
 ## Aktualizacje
 
-Paweł wprowadza zmiany w repozytorium. U Was: `claude plugin update labosport@labosport-ai`, potem `/reload-plugins` (albo restart aplikacji). Dane w folderze roboczym nie są ruszane przy aktualizacji.
+Paweł wprowadza zmiany w repozytorium. U Was: `claude plugin update labosport@labosport-ai`, potem `/reload-plugins` (albo restart aplikacji). Dane na Dysku nie są ruszane przy aktualizacji.
 
 Dokumentacja dla administratora: [docs/ADMIN.md](docs/ADMIN.md).

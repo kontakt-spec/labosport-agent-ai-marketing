@@ -21,8 +21,8 @@
 | `naglowek` | tekst na grafice (wersaliki, do 30 znaków w linii, linie przez `\n`) |
 | `podtytul` | druga linia na grafice |
 | `cta_grafika` | tekst przycisku (np. `WWW.CASTLETRIATHLON.COM`) |
-| `wzorzec` | układ z `profil-eventu.md` (np. `liczba_obrys`) |
-| `zdjecie` | ID zdjęcia z katalogu `03 Zdjęcia/_katalog.json` albo nazwa z Canvy |
+| `wzorzec` | układ z `Profil eventu` (np. `liczba_obrys`) |
+| `zdjecie` | ID zdjęcia z katalogu `03 ZDJĘCIA/_katalog zdjęć.json` (nazwa pliku na Dysku bez rozszerzenia) albo nazwa z Canvy |
 | `opis` | gotowy opis posta |
 | `komentarz` | pierwszy komentarz |
 | `slajdy` | tylko karuzela: lista tekstów slajdów |
@@ -31,8 +31,10 @@
 | `wymaga_danych` | czego brakuje od LABOSPORT (np. „liczba pozostałych pakietów”) |
 | `status` | `propozycja` → `zaakceptowany` / `do_zmiany` / `odrzucony` → `grafika_gotowa` → `opis_gotowy` → `sprawdzony` → `w_postiz` |
 | `uwagi_klienta` | decyzja z akceptacji |
-| `canva`, `postiz`, `eksport` | uzupełnia system w trakcie produkcji |
+| `canva`, `postiz` | uzupełnia system w trakcie produkcji (ID projektu i strony, ID szkicu) |
 
-Nagłówek pliku planu: `id`, `event`, `event_nazwa`, `kampania` (nazwa folderu kampanii lokalnie i w Canvie), `okres {od, do}`, `wersja` (rośnie przy każdej zmianie zapisanej w Canvie), `aktualizacja` (czas ostatniego zapisu), `status`, `zalozenia`, `kamienie[]`, `styl {akcent, akcent2}`, `zakazane_slowa`, `styl_opisow`, `max_postow_dziennie`, `canva {folder_eventu_id, folder_kampanii_id, plan_design_id, plan_link, posty_design_id, ...}`.
+Nagłówek pliku planu: `id`, `event`, `event_nazwa`, `kampania` (nazwa folderu kampanii na Dysku i w Canvie), `okres {od, do}`, `wersja` (rośnie przy każdym zapisie na Dysk; to N w nazwie pliku `plan v<N> (<od> do <do>).json`), `status`, `zalozenia`, `kamienie[]`, `styl {akcent, akcent2}`, `zakazane_slowa`, `styl_opisow`, `max_postow_dziennie`, `canva {folder_eventu_id, folder_kampanii_id, posty_design_id, karuzele_design_id, stories_design_id, rolki_design_id}`.
 
-`_chmura` (pisze skrypt `canva-import`): wersja, suma kontrolna i czas ostatniej synchronizacji z Canvą na tym komputerze. Nie trafia do Canvy.
+Pola, które pisze sam skrypt przy każdej zmianie: `aktualizacja` (czas), `zmienil` (imię z `~/.labosport/config.json`), `historia[]` (`kiedy`, `kto`, `co`; ostatnie 200 wpisów).
+
+`event.json` → `progi` (opcjonalnie, gdy progi nie są w Wordzie): lista `{dystans, prog, cena_zl, termin (RRRR-MM-DD), pula, wyprzedane}`. `progi_korekta.wyprzedane_do_progu`: `{"<wzorzec dystansu>": <numer progu>}` gdy strona zapisów pokazuje wyprzedanie wcześniej niż dokument.

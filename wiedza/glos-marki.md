@@ -1,6 +1,6 @@
 # Głos marki LABOSPORT
 
-Zasady pisania opisów, komentarzy i tekstów na grafiki. Wyciągnięte z 47 opisów z Instagrama (październik 2026), z tekstów na ~1200 grafikach w Canvie i z audytu. Szczegóły jednego eventu (hashtagi, emoji, formuły) są w jego `event.json` (sekcja `styl_opisow`) i `profil-eventu.md`. Event ma pierwszeństwo przed tym plikiem.
+Zasady pisania opisów, komentarzy i tekstów na grafiki. Wyciągnięte z 47 opisów z Instagrama (październik 2026), z tekstów na ~1200 grafikach w Canvie i z audytu. Szczegóły jednego eventu (hashtagi, emoji, formuły) są w jego `event.json` (sekcja `styl_opisow`) i `Profil eventu` na Dysku. Event ma pierwszeństwo przed tym dokumentem, a `Zmiany dla Agenta AI` przed wszystkim.
 
 ## Najważniejsze w 7 punktach
 
@@ -10,7 +10,7 @@ Zasady pisania opisów, komentarzy i tekstów na grafiki. Wyciągnięte z 47 opi
 4. **Emoji są znacznikami, nie ozdobą.** 📅 data, 📍 miejsce, 🌐 strona, ➡️ zmiana ceny, ⏳ termin, 🔗 lub 👇 link. Do tego sygnatura eventu (CTM: ⚔️ 🏰 🔥). Nigdy ✨ 🚀 💡 🎯 💫.
 5. **Żadnych pauz (—) i myślników ze spacjami ( – ).** Zamiast tego kropka, przecinek albo dwukropek. Półpauza tylko w zakresie dat bez spacji (4–5 września) albo zwykły dywiz: 4-5 września.
 6. **Nic nie wymyślamy.** Ceny, daty, pule, liczby zapisanych, nazwiska i nagrody tylko z danych eventu albo od LABOSPORT. Brak danych = pytanie w planie, nie zgadywanie.
-7. **Tekst ma brzmieć jak napisany przez człowieka z zespołu.** Kontrola: `lab.py lint` i czarna lista (`wiedza/czarna-lista.txt`).
+7. **Tekst ma brzmieć jak napisany przez człowieka z zespołu.** Kontrola: `lab.py lint` i czarna lista (dokument `Czarna lista zwrotów` w `00 Baza wiedzy` na Dysku).
 
 ## Budowa opisu (tak piszą dziś)
 

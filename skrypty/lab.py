@@ -1,25 +1,36 @@
 #!/usr/bin/env python3
 """LABOSPORT Agent AI Marketing: narzedzia pomocnicze dla skilli.
 
+Jedynym miejscem danych i baza wiedzy jest wspolny folder na Dysku Google LABOSPORT
+(np. "LABOSPORT Marketing AI"), czytany i zapisywany konektorem Google Drive. Na komputerze
+zostaje tylko ~/.labosport (ustawienia i stan panelu). Skrypty licza na chwilowej kopii roboczej
+w folderze tymczasowym systemu: agent pobiera do niej pliki z Dysku, a wynik zapisuje z powrotem na Dysk.
+
 Uzycie (zawsze przez python3 -I, sciezka z katalogu pluginu):
-  lab.py gdzie                          sciezka folderu roboczego
-  lab.py init [--workspace SCIEZKA]     tworzy folder roboczy i foldery eventow (nic nie nadpisuje)
-  lab.py eventy                         lista eventow i kompletnosc danych
-  lab.py czytaj EVENT                   caly tekst z "01 Informacje o evencie"
+  lab.py podlacz --id ID --nazwa NAZWA [--link URL] [--uzytkownik IMIE]   zapamietuje folder z Dysku
+  lab.py gdzie                          folder na Dysku, uzytkownik, kopia robocza
+  lab.py robocze EVENT [--kampania K]   foldery kopii roboczej eventu (tu trafiaja pliki z Dysku)
+  lab.py z-dysku WYNIK --do PLIK        zapisuje plik pobrany konektorem (download_file_content) do kopii roboczej
+  lab.py wiedza                         pliki bazy wiedzy na Dysku i ich kopie robocze
+  lab.py eventy                         eventy znane pluginowi (nazwy, skroty, aliasy, nasiona)
+  lab.py nasiona EVENT                  pliki startowe eventu do wgrania na Dysk, jesli ich tam nie ma
+  lab.py czytaj EVENT                   tekst dokumentow z kopii roboczej "01 Informacje o evencie"
   lab.py progi EVENT [--dzis RRRR-MM-DD]  progi cenowe + aktywny prog
   lab.py kalendarz EVENT --od D --do D  kamienie milowe w oknie planu
   lab.py zdjecia EVENT                  zdjecia z katalogiem tagow
+  lab.py nazwa-planu PLAN.json          nazwa i opis pliku planu na Dysku (wersja, okres, kto zmienil)
+  lab.py nachodzi --od D --do D NAZWA...   ktore plany na Dysku (po nazwach plikow) nachodza na okres
+  lab.py blokada (--nowa | --powod TEKST)  znacznik "kto teraz pracuje na planie" (blokada pliku na Dysku)
   lab.py lint [--rodzaj opis|naglowek] [--event EVENT] (--tekst T | --plik P)
   lab.py sprawdz-plan PLAN.json         kontrola calego planu (teksty, daty, kolizje)
   lab.py plan-html PLAN.json            podglad planu do akceptacji (plan.html obok)
-  lab.py ustaw PLAN.json ID pole=wartosc   zmiana pozycji planu (status, canva.design_id, ...)
+  lab.py ustaw PLAN.json ID pole=wartosc   zmiana pozycji planu (PLAN = naglowek, '*' = wszystkie)
   lab.py decyzje PLAN.json PLIK.txt     wczytuje decyzje skopiowane z plan.html
   lab.py opisy-scal PLAN.json           opisy/<ID>.md -> plan.json
-  lab.py miniatury EVENT                miniatury zdjec do przegladu (sips)
-  lab.py dodaj-event "Nazwa" SKROT      nowy event w folderze roboczym
-  lab.py canva-eksport PLAN.json [--oznacz] [--wyjscie P]   strony projektu planu do zapisu w Canvie
-  lab.py canva-import PLIK.pptx --do PLAN.json   pobranie planu z Canvy (eksport PPTX albo tekst notatek)
-  lab.py canva-porownaj STRONY.json PLIK.pptx   które strony planu w Canvie trzeba zapisać jeszcze raz
+  lab.py na-dysk PLIK                   tresc pliku do wyslania na Dysk (JSON w zwartej postaci)
+  lab.py miniatury EVENT                miniatury zdjec z kopii roboczej (sips)
+  lab.py dodaj-event "Nazwa" SKROT      event.json nowego eventu do wgrania na Dysk
+  lab.py sprzataj [EVENT]               usuwa kopie robocza (po zapisie na Dysk)
   lab.py utc RRRR-MM-DD GG:MM           czas w Polsce -> UTC dla Postiz
   lab.py stan [--event ..] [--kampania ..] [--etap ..] [--status ..] [--postep a/b]
               [--opis ..] [--log ..] [--czeka ..] [--agent nazwa:zadanie:status]
@@ -31,19 +42,33 @@ import os
 import re
 import shutil
 import sys
+import tempfile
 import unicodedata
 
 KATALOG = os.path.dirname(os.path.abspath(__file__))
 PLUGIN = os.path.dirname(KATALOG)
 sys.path.insert(0, KATALOG)
 
-import lab_chmura  # noqa: E402
 import lab_docx  # noqa: E402
 import lab_kalendarz  # noqa: E402
 import lab_lint  # noqa: E402
 
 KONFIG = os.path.expanduser("~/.labosport/config.json")
-DOMYSLNY_WORKSPACE = os.path.expanduser("~/LABOSPORT Marketing")
+STAN = os.path.expanduser(os.environ.get("LABOSPORT_STAN") or "~/.labosport/stan.json")  # stan panelu tego komputera
+# Nazwy, pod ktorymi szukamy wspolnego folderu na Dysku Google (pierwsza = docelowa).
+NAZWY_DYSKU = ["LABOSPORT Marketing AI", "LaboSport Marketing AI", "System Marketingowy Labosport"]
+BAZA = "00 Baza wiedzy"
+ZMIANY = "Zmiany dla Agenta AI"   # dokument zespolu z poprawkami dla agenta (najwyzszy priorytet)
+# Wiedza, ktora zespol edytuje na Dysku jako Dokumenty Google (plik w pluginie -> tytul na Dysku).
+WIEDZA_NA_DYSKU = [
+    ("labosport.md", "Kontekst LABOSPORT"),
+    ("playbook-komunikacji.md", "Playbook komunikacji"),
+    ("glos-marki.md", "Głos marki"),
+    ("czarna-lista.txt", "Czarna lista zwrotów"),
+]
+# Wiedza techniczna (procedury narzedzi), zostaje w pluginie.
+WIEDZA_W_PLUGINIE = ["dysk.md", "canva.md", "postiz.md", "formaty.md"]
+BLOKADA_GODZIN = 3
 ETAPY = ["dane", "plan", "akceptacja_planu", "grafiki", "opisy", "kontrola", "akceptacja_postow", "postiz"]
 STRUKTURA = [
     "01 Informacje o evencie",
@@ -72,13 +97,33 @@ Agent czyta ten folder za każdym razem, gdy planuje. Zmiana pliku = nowa wiedza
 
 # ---------------------------------------------------------------- konfiguracja
 
-def workspace():
-    if os.environ.get("LABOSPORT_WORKSPACE"):
-        return os.path.expanduser(os.environ["LABOSPORT_WORKSPACE"])
+def konfig():
     if os.path.exists(KONFIG):
         with open(KONFIG, encoding="utf-8") as f:
-            return json.load(f).get("workspace", DOMYSLNY_WORKSPACE)
-    return DOMYSLNY_WORKSPACE
+            return json.load(f)
+    return {}
+
+
+def dysk():
+    """Folder na Dysku Google: {"id", "nazwa", "link"} albo None, gdy system nie jest podlaczony."""
+    d = konfig().get("dysk")
+    return d if isinstance(d, dict) and d.get("id") else None
+
+
+def workspace():
+    """Kopia robocza (folder tymczasowy systemu). Nie trzyma danych na stale: zrodlem jest Dysk."""
+    return os.path.expanduser(os.environ.get("LABOSPORT_WORKSPACE") or
+                              os.path.join(tempfile.gettempdir(), "labosport-robocze"))
+
+
+def wymagany_workspace():
+    ws = workspace()
+    os.makedirs(ws, exist_ok=True)
+    return ws
+
+
+def kto():
+    return konfig().get("uzytkownik") or os.environ.get("USER") or "?"
 
 
 def zapisz_konfig(**zmiany):
@@ -99,12 +144,12 @@ def _norm(s):
 
 
 def lista_eventow():
-    """Eventy z pluginu + eventy dodane przez LABOSPORT (folder roboczy, _system/eventy.json).
+    """Eventy znane pluginowi + dodane w tej kopii roboczej (_system/eventy.json z Dysku).
     Wlasne wpisy maja pierwszenstwo, bo plugin podmienia sie przy aktualizacji."""
     with open(os.path.join(PLUGIN, "eventy", "lista.json"), encoding="utf-8") as f:
         eventy = {e["slug"]: e for e in json.load(f)["eventy"]}
-    wlasne = os.path.join(workspace(), "_system", "eventy.json")
-    if os.path.exists(wlasne):
+    wlasne = os.path.join(workspace() or "", "_system", "eventy.json")
+    if workspace() and os.path.exists(wlasne):
         with open(wlasne, encoding="utf-8") as f:
             for e in json.load(f).get("eventy", []):
                 eventy[e["slug"]] = e
@@ -112,8 +157,9 @@ def lista_eventow():
 
 
 def znajdz_event(nazwa):
-    """Folder eventu po nazwie, skrocie lub slugu (tolerancyjnie)."""
-    ws = workspace()
+    """Folder eventu w kopii roboczej po nazwie, skrocie lub slugu (tolerancyjnie).
+    Znany event bez kopii roboczej dostaje pusty folder, do ktorego agent pobiera pliki z Dysku."""
+    ws = wymagany_workspace()
     klucz = _norm(nazwa)
     kandydaci = {}
     for e in lista_eventow():
@@ -121,11 +167,15 @@ def znajdz_event(nazwa):
             if alias:
                 kandydaci[_norm(alias)] = e["nazwa"]
     docelowa = kandydaci.get(klucz, nazwa)
-    if os.path.isdir(ws):
-        for wpis in os.listdir(ws):
-            if _norm(wpis) in (klucz, _norm(docelowa)):
-                return os.path.join(ws, wpis)
-    sys.exit("Nie znalazlem folderu eventu %r w %s. Uruchom: lab.py eventy" % (nazwa, ws))
+    for wpis in os.listdir(ws):
+        if _norm(wpis) in (klucz, _norm(docelowa)):
+            return os.path.join(ws, wpis)
+    if klucz not in kandydaci:
+        sys.exit("Nie znam eventu %r. Znane: lab.py eventy. Nowy event: lab.py dodaj-event" % nazwa)
+    cel = os.path.join(ws, docelowa)
+    for sc in STRUKTURA:
+        os.makedirs(os.path.join(cel, sc), exist_ok=True)
+    return cel
 
 
 def podfolder(event_dir, prefiks):
@@ -150,83 +200,141 @@ def event_json(event_dir):
 
 # ---------------------------------------------------------------- komendy
 
+def cmd_podlacz(a):
+    """Zapamietuje wspolny folder z Dysku Google (znaleziony konektorem) i imie osoby."""
+    zmiany = {"dysk": {"id": a.id, "nazwa": a.nazwa,
+                       "link": a.link or "https://drive.google.com/drive/folders/%s" % a.id},
+              "podlaczono": dt.datetime.now().isoformat(timespec="seconds")}
+    if a.uzytkownik:
+        zmiany["uzytkownik"] = a.uzytkownik
+    zapisz_konfig(**zmiany)
+    cmd_gdzie(a)
+
+
 def cmd_gdzie(a):
-    print(workspace())
+    print(json.dumps({"dysk": dysk(), "podlaczony": bool(dysk()), "uzytkownik": kto(),
+                      "kopia_robocza": workspace(), "szukane_nazwy_folderu": NAZWY_DYSKU},
+                     ensure_ascii=False, indent=2))
 
 
-def cmd_init(a):
-    ws = os.path.abspath(os.path.expanduser(a.workspace or workspace()))
-    nowe, istniejace = [], []
-    os.makedirs(os.path.join(ws, "_system"), exist_ok=True)
-    for e in lista_eventow():
-        istnieje = None
-        for wpis in os.listdir(ws):
-            if _norm(wpis) in {_norm(x) for x in [e["nazwa"], e["slug"]] + e.get("aliasy", [])}:
-                istnieje = os.path.join(ws, wpis)
-        cel = istnieje or os.path.join(ws, e["nazwa"])
-        if istnieje:
-            istniejace.append(e["nazwa"])
-        else:
-            nowe.append(e["nazwa"])
-            for sciezka in STRUKTURA:
-                os.makedirs(os.path.join(cel, sciezka), exist_ok=True)
-            with open(os.path.join(cel, "01 Informacje o evencie", "CO TU WRZUCIĆ.txt"), "w", encoding="utf-8") as f:
-                f.write(README_01)
-        os.makedirs(podfolder(cel, "04") or os.path.join(cel, "04 Plany i kampanie"), exist_ok=True)
-        # Nasiona wiedzy z pluginu: kopiujemy tylko, gdy w folderze jeszcze ich nie ma.
-        nasiona = os.path.join(PLUGIN, "eventy", e["slug"])
-        if os.path.isdir(nasiona):
-            for plik in os.listdir(nasiona):
-                src = os.path.join(nasiona, plik)
-                dst = os.path.join(cel, plik)
-                if plik == "zdjecia-katalog.json":
-                    dst_dir = podfolder(cel, "03") or os.path.join(cel, "03 Zdjęcia")
-                    dst = os.path.join(dst_dir, "_katalog.json")
-                if os.path.isfile(src) and not os.path.exists(dst):
-                    shutil.copy2(src, dst)
-    jak = os.path.join(ws, "Jak korzystać.md")
-    if not os.path.exists(jak):
-        shutil.copy2(os.path.join(PLUGIN, "szablony", "Jak korzystać.md"), jak)
-    zapisz_konfig(workspace=ws, utworzono=dt.datetime.now().isoformat(timespec="seconds"))
-    print(json.dumps({"workspace": ws, "nowe_foldery": nowe, "juz_byly": istniejace}, ensure_ascii=False, indent=2))
+def cmd_robocze(a):
+    event_dir = znajdz_event(a.event)
+    out = {"event": os.path.basename(event_dir), "folder": event_dir,
+           "01": podfolder(event_dir, "01"), "02": podfolder(event_dir, "02"),
+           "03": podfolder(event_dir, "03"), "04": podfolder(event_dir, "04")}
+    if a.kampania:
+        k = os.path.join(out["04"], a.kampania)
+        os.makedirs(os.path.join(k, "opisy"), exist_ok=True)
+        out["kampania"] = k
+        out["plan"] = os.path.join(k, "plan.json")
+    out["baza_wiedzy"] = os.path.join(wymagany_workspace(), BAZA)
+    os.makedirs(out["baza_wiedzy"], exist_ok=True)
+    print(json.dumps(out, ensure_ascii=False, indent=2))
 
 
-def _kompletnosc(event_dir):
-    def pliki(prefiks, rozszerzenia=None):
-        p = podfolder(event_dir, prefiks)
-        if not p:
-            return 0
-        n = 0
-        for root, _, files in os.walk(p):
-            for f in files:
-                if f.startswith(".") or f.startswith("_") or f == "CO TU WRZUCIĆ.txt":
-                    continue
-                if rozszerzenia is None or f.lower().rsplit(".", 1)[-1] in rozszerzenia:
-                    n += 1
-        return n
-    return {
-        "informacje": pliki("01"),
-        "grafiki": pliki("02"),
-        "zdjecia": pliki("03", {"jpg", "jpeg", "png", "webp", "heic"}),
-        "event_json": os.path.exists(os.path.join(event_dir, "event.json")),
-        "profil": os.path.exists(os.path.join(event_dir, "profil-eventu.md")),
-    }
+def cmd_z_dysku(a):
+    """Plik z Dysku do kopii roboczej. WYNIK to plik z odpowiedzia download_file_content
+    ({"content": base64, ...}; duze odpowiedzi narzedzie samo zapisuje do pliku), plik z samym
+    base64 albo z tekstem (np. odpowiedz read_file_content z polem fileContent)."""
+    import base64
+    import binascii
+    with open(a.wynik, "rb") as f:
+        surowe = f.read()
+    dane, rodzaj = surowe, "bez zmian"
+    try:
+        j = json.loads(surowe.decode("utf-8"))
+    except ValueError:
+        j = None
+    if isinstance(j, list) and j and isinstance(j[0], dict) and "text" in j[0]:
+        try:
+            j = json.loads(j[0]["text"])
+        except ValueError:
+            pass
+    if isinstance(j, dict) and isinstance(j.get("content"), str):
+        dane, rodzaj = base64.b64decode(j["content"]), "base64 (download_file_content)"
+    elif isinstance(j, dict) and isinstance(j.get("fileContent"), str):
+        dane, rodzaj = j["fileContent"].encode("utf-8"), "tekst (read_file_content)"
+    elif j is None:
+        tekst = surowe.decode("ascii", "ignore").strip()
+        if tekst and re.fullmatch(r"[A-Za-z0-9+/=\s]+", tekst):
+            try:
+                dane, rodzaj = base64.b64decode(re.sub(r"\s", "", tekst), validate=True), "base64"
+            except (binascii.Error, ValueError):
+                pass
+    if dane.startswith(b"\xef\xbb\xbf"):
+        dane = dane[3:]
+    os.makedirs(os.path.dirname(os.path.abspath(a.do)) or ".", exist_ok=True)
+    with open(a.do, "wb") as f:
+        f.write(dane)
+    print(json.dumps({"zapisano": os.path.abspath(a.do), "bajtow": len(dane), "rozpoznano": rodzaj,
+                      "tytul_na_dysku": j.get("title") if isinstance(j, dict) else None}, ensure_ascii=False))
+
+
+def cmd_na_dysk(a):
+    """Tresc do pola textContent w create_file. JSON w zwartej postaci, zeby wysylka byla krotsza."""
+    with open(a.plik, encoding="utf-8") as f:
+        tekst = f.read()
+    if a.plik.lower().endswith(".json"):
+        tekst = json.dumps(json.loads(tekst), ensure_ascii=False, separators=(",", ":"))
+    sys.stdout.write(tekst)
+
+
+def plik_wiedzy(nazwa_pluginu):
+    """Kopia robocza dokumentu z Dysku (edytuje go zespol), a gdy jej brak: domyslny plik z pluginu."""
+    for plik, tytul in WIEDZA_NA_DYSKU:
+        if plik == nazwa_pluginu:
+            for ext in (".txt", ".md"):
+                p = os.path.join(workspace(), BAZA, tytul + ext)
+                if os.path.exists(p):
+                    return p
+    return os.path.join(PLUGIN, "wiedza", nazwa_pluginu)
+
+
+def cmd_wiedza(a):
+    out = {"na_dysku": {"folder": BAZA, "dokumenty_google": [t for _, t in WIEDZA_NA_DYSKU],
+                        "poprawki_zespolu": ZMIANY + " (Dokument Google w folderze glownym, czytaj zawsze pierwszy)"},
+           "kopia_robocza": os.path.join(workspace(), BAZA), "pliki": {}}
+    for plik, tytul in WIEDZA_NA_DYSKU:
+        p = plik_wiedzy(plik)
+        out["pliki"][tytul] = {"sciezka": p, "zrodlo": "plugin (nasiono)" if p.startswith(PLUGIN) else "Dysk (kopia robocza)",
+                               "nasiono": os.path.join(PLUGIN, "wiedza", plik)}
+    for plik in WIEDZA_W_PLUGINIE:
+        out["pliki"][plik] = {"sciezka": os.path.join(PLUGIN, "wiedza", plik), "zrodlo": "plugin (procedury)"}
+    print(json.dumps(out, ensure_ascii=False, indent=2))
 
 
 def cmd_eventy(a):
-    ws = workspace()
     out = []
     for e in lista_eventow():
-        katalog = None
-        if os.path.isdir(ws):
-            for wpis in os.listdir(ws):
-                if _norm(wpis) in {_norm(x) for x in [e["nazwa"], e["slug"]] + e.get("aliasy", [])}:
-                    katalog = os.path.join(ws, wpis)
-        k = _kompletnosc(katalog) if katalog else None
-        gotowy = bool(k and k["informacje"] and k["grafiki"] and k["zdjecia"])
-        out.append({"nazwa": e["nazwa"], "skrot": e.get("skrot"), "folder": katalog, "dane": k,
-                    "gotowy_do_planu": gotowy})
-    print(json.dumps({"workspace": ws, "eventy": out}, ensure_ascii=False, indent=2))
+        nasiona = os.path.join(PLUGIN, "eventy", e["slug"])
+        out.append({"nazwa": e["nazwa"], "skrot": e.get("skrot"), "aliasy": e.get("aliasy", []),
+                    "status_profilu": e.get("status"),
+                    "nasiona": sorted(os.listdir(nasiona)) if os.path.isdir(nasiona) else []})
+    print(json.dumps({"eventy": out}, ensure_ascii=False, indent=2))
+
+
+def cmd_nasiona(a):
+    """Pliki startowe eventu z pluginu, ktore trzeba wgrac na Dysk, gdy ich tam nie ma."""
+    event_dir = znajdz_event(a.event)
+    slug = next((e["slug"] for e in lista_eventow() if e["nazwa"] == os.path.basename(event_dir)), None)
+    katalog = os.path.join(PLUGIN, "eventy", slug or "-")
+    cele = {"event.json": ("event.json", "folder eventu", "application/json"),
+            "profil-eventu.md": ("Profil eventu", "folder eventu (Dokument Google)", "text/markdown"),
+            "zdjecia-katalog.json": ("_katalog zdjęć.json", "folder 03 Zdjęcia", "application/json")}
+    out = []
+    if os.path.isdir(katalog):
+        for plik in sorted(os.listdir(katalog)):
+            tytul, gdzie, mime = cele.get(plik, (plik, "folder eventu", "text/plain"))
+            out.append({"plik": os.path.join(katalog, plik), "tytul_na_dysku": tytul, "gdzie": gdzie,
+                        "contentMimeType": mime, "google_doc": mime == "text/markdown"})
+    print(json.dumps({"event": os.path.basename(event_dir), "nasiona": out}, ensure_ascii=False, indent=2))
+
+
+def cmd_sprzataj(a):
+    cel = znajdz_event(a.event) if a.event else workspace()
+    if os.path.isdir(cel):
+        shutil.rmtree(cel)
+    print(json.dumps({"usunieto": cel}, ensure_ascii=False))
 
 
 def cmd_czytaj(a):
@@ -255,10 +363,12 @@ def cmd_czytaj(a):
 
 
 def _plik_progow(event_dir):
+    """Dokument progow w kopii roboczej: Word (pobrany z Dysku) albo tekst z tabelami
+    (odpowiedz read_file_content zapisana jako .md/.txt)."""
     info = podfolder(event_dir, "01") or event_dir
     for root, _, files in os.walk(info):
-        for f in files:
-            if f.lower().endswith(".docx") and "prog" in _norm(f):
+        for f in sorted(files):
+            if f.lower().rsplit(".", 1)[-1] in ("docx", "md", "txt") and "prog" in _norm(f):
                 return os.path.join(root, f)
     return None
 
@@ -267,9 +377,16 @@ def progi_eventu(event_dir):
     """Progi z dokumentu + korekta z event.json (progi_korekta.wyprzedane_do_progu),
     bo dokument w Wordzie bywa starszy niz stan sprzedazy na stronie."""
     plik = _plik_progow(event_dir)
-    if not plik:
+    if plik and plik.lower().endswith(".docx"):
+        progi = lab_kalendarz.progi_z_docx(plik)
+    elif plik:
+        with open(plik, encoding="utf-8", errors="replace") as f:
+            progi = lab_kalendarz.progi_z_tekstu(f.read())
+    elif event_json(event_dir).get("progi"):
+        # Progi przepisane przez agenta z Dokumentu Google albo strony (ten sam układ pól).
+        plik, progi = "event.json (progi)", [{"pula": "", "wyprzedane": False, **p} for p in event_json(event_dir)["progi"]]
+    else:
         return None, []
-    progi = lab_kalendarz.progi_z_docx(plik)
     korekta = event_json(event_dir).get("progi_korekta", {}).get("wyprzedane_do_progu", {})
     for wzorzec, do_progu in korekta.items():
         rx = re.compile(wzorzec, re.IGNORECASE)
@@ -283,7 +400,8 @@ def cmd_progi(a):
     event_dir = znajdz_event(a.event)
     plik, progi = progi_eventu(event_dir)
     if not plik:
-        sys.exit("Brak pliku z progami (docx z 'prog' w nazwie) w 01 Informacje o evencie.")
+        sys.exit("Brak progow w kopii roboczej: pobierz z Dysku dokument z 'prog' w nazwie do folderu 01 "
+                 "(lab.py robocze EVENT pokazuje folder) albo wpisz liste 'progi' do event.json.")
     dzis = dt.date.fromisoformat(a.dzis) if a.dzis else dt.date.today()
     print(json.dumps({"plik": os.path.basename(plik), "dzis": dzis.isoformat(),
                       "korekta": event_json(event_dir).get("progi_korekta"),
@@ -303,18 +421,19 @@ def cmd_zdjecia(a):
     event_dir = znajdz_event(a.event)
     folder = podfolder(event_dir, "03")
     if not folder:
-        sys.exit("Brak folderu 03 Zdjęcia")
+        sys.exit("Brak folderu 03 w kopii roboczej (lab.py robocze EVENT)")
     katalog = {}
-    kp = os.path.join(folder, "_katalog.json")
-    if os.path.exists(kp):
+    kp = next((os.path.join(folder, f) for f in ("_katalog zdjęć.json", "_katalog.json")
+               if os.path.exists(os.path.join(folder, f))), "")
+    if kp:
         with open(kp, encoding="utf-8") as f:
             katalog = {z["id"]: z for z in json.load(f)["zdjecia"]}
+    pobrane = {f.rsplit(".", 1)[0]: os.path.join(folder, f) for f in sorted(os.listdir(folder))
+               if f.lower().rsplit(".", 1)[-1] in ("jpg", "jpeg", "png", "webp", "heic")}
     out = []
-    for f in sorted(os.listdir(folder)):
-        if f.lower().rsplit(".", 1)[-1] not in ("jpg", "jpeg", "png", "webp", "heic"):
-            continue
-        zid = f.rsplit(".", 1)[0]
-        out.append({"id": zid, "plik": os.path.join(folder, f), **{k: v for k, v in katalog.get(zid, {}).items() if k != "id"}})
+    # Zdjecia leza na Dysku; katalog mowi, co na nich jest, a plik sciagamy tylko, gdy trafia do grafiki.
+    for zid in sorted(set(katalog) | set(pobrane)):
+        out.append({"id": zid, "pobrane": pobrane.get(zid), **{k: v for k, v in katalog.get(zid, {}).items() if k != "id"}})
     print(json.dumps({"folder": folder, "liczba": len(out), "bez_opisu": sum(1 for z in out if "tagi" not in z),
                       "zdjecia": out}, ensure_ascii=False, indent=2))
 
@@ -322,7 +441,7 @@ def cmd_zdjecia(a):
 def styl_lintu(ej):
     """Parametry kontroli tekstu z event.json (sekcja styl_opisow + zakazane_slowa)."""
     styl = ej.get("styl_opisow", {})
-    out = {"zakazane": ej.get("zakazane_slowa", [])}
+    out = {"zakazane": ej.get("zakazane_slowa", []), "czarna_lista": plik_wiedzy("czarna-lista.txt")}
     for k in ("max_emoji", "max_hashtagi"):
         if k in styl:
             out[k] = styl[k]
@@ -334,7 +453,7 @@ def cmd_lint(a):
     if a.plik:
         with open(a.plik, encoding="utf-8") as f:
             tekst = f.read()
-    styl = styl_lintu(event_json(znajdz_event(a.event))) if a.event else {}
+    styl = styl_lintu(event_json(znajdz_event(a.event))) if a.event else {"czarna_lista": plik_wiedzy("czarna-lista.txt")}
     wynik = lab_lint.sprawdz(tekst or "", rodzaj=a.rodzaj, **styl)
     print(json.dumps(wynik, ensure_ascii=False, indent=2))
     sys.exit(0 if wynik["ok"] else 1)
@@ -443,7 +562,7 @@ def cmd_utc(a):
 
 
 def cmd_stan(a):
-    sciezka = os.path.join(workspace(), "_system", "stan.json")
+    sciezka = STAN
     stan = {"etapy": {e: "czeka" for e in ETAPY}, "agenci": [], "log": []}
     if os.path.exists(sciezka) and not a.reset:
         with open(sciezka, encoding="utf-8") as f:
@@ -455,8 +574,6 @@ def cmd_stan(a):
         stan["kampania"] = a.kampania
     if a.plan:
         stan["plan"] = os.path.abspath(a.plan)
-    if a.plan_canva:
-        stan["plan_canva"] = a.plan_canva
     if a.etap:
         if a.etap not in ETAPY and a.etap != "gotowe":
             sys.exit("Nieznany etap %r. Etapy: %s" % (a.etap, ", ".join(ETAPY)))
@@ -492,7 +609,11 @@ def cmd_stan(a):
 
 # ---------------------------------------------------------------- plan: zmiany
 
-def _zapisz_plan(sciezka, plan):
+def _zapisz_plan(sciezka, plan, co=None):
+    plan["aktualizacja"] = dt.datetime.now().isoformat(timespec="seconds")
+    plan["zmienil"] = kto()
+    if co:
+        plan["historia"] = (plan.get("historia", []) + [{"kiedy": plan["aktualizacja"], "kto": plan["zmienil"], "co": co}])[-200:]
     tmp = sciezka + ".tmp"
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(plan, f, ensure_ascii=False, indent=2)
@@ -518,7 +639,7 @@ def cmd_ustaw(a):
         for przypisanie in a.pola:
             k, _, v = przypisanie.partition("=")
             _ustaw_pole(plan, k, v)
-        _zapisz_plan(a.plan, plan)
+        _zapisz_plan(a.plan, plan, "nagłówek planu: " + ", ".join(x.partition("=")[0] for x in a.pola))
         print(json.dumps({"zmienione": ["PLAN"]}, ensure_ascii=False))
         return
     ids = set(a.id.split(","))
@@ -533,7 +654,8 @@ def cmd_ustaw(a):
             trafione.append(p["id"])
     if not trafione:
         sys.exit("Nie ma pozycji %s w planie" % a.id)
-    _zapisz_plan(a.plan, plan)
+    _zapisz_plan(a.plan, plan, "%s: %s" % (", ".join(trafione[:8]) + ("…" if len(trafione) > 8 else ""),
+                                          ", ".join(x.partition("=")[0] + "=" + x.partition("=")[2][:30] for x in a.pola)))
     print(json.dumps({"zmienione": trafione}, ensure_ascii=False))
 
 
@@ -583,7 +705,8 @@ def cmd_decyzje(a):
                     wynik["do_zmiany"].append({"id": i, "uwaga": uwaga})
                 else:
                     wynik["nieznane_id"].append(i)
-    _zapisz_plan(a.plan, plan)
+    _zapisz_plan(a.plan, plan, "decyzje: %d akceptacji, %d zmian, %d usunięć" % (
+        len(wynik["zaakceptowane"]), len(wynik["do_zmiany"]), len(wynik["odrzucone"])))
     print(json.dumps(wynik, ensure_ascii=False, indent=2))
 
 
@@ -605,7 +728,7 @@ def cmd_opisy_scal(a):
         if p.get("status") in ("zaakceptowany", "grafika_gotowa"):
             p["status"] = "opis_gotowy" if p.get("status") == "zaakceptowany" else p["status"]
         scalone.append(p["id"])
-    _zapisz_plan(a.plan, plan)
+    _zapisz_plan(a.plan, plan, "opisy: %d pozycji" % len(scalone))
     print(json.dumps({"scalone": scalone}, ensure_ascii=False))
 
 
@@ -630,15 +753,15 @@ def cmd_miniatury(a):
 
 
 def cmd_dodaj_event(a):
-    """Rejestruje nowy event w folderze roboczym i zaklada jego folder."""
-    ws = workspace()
+    """Nowy event: folder w kopii roboczej + event.json do wgrania na Dysk (agent zaklada folder na Dysku)."""
+    ws = wymagany_workspace()
+    slug = re.sub(r"[^a-z0-9]+", "-", unicodedata.normalize("NFKD", a.nazwa.lower()).encode("ascii", "ignore").decode()).strip("-")
+    wpis = {"slug": slug, "nazwa": a.nazwa, "skrot": a.skrot, "aliasy": [a.skrot] + (a.alias or []), "status": "szkic"}
     sciezka = os.path.join(ws, "_system", "eventy.json")
     dane = {"eventy": []}
     if os.path.exists(sciezka):
         with open(sciezka, encoding="utf-8") as f:
             dane = json.load(f)
-    slug = re.sub(r"[^a-z0-9]+", "-", unicodedata.normalize("NFKD", a.nazwa.lower()).encode("ascii", "ignore").decode()).strip("-")
-    wpis = {"slug": slug, "nazwa": a.nazwa, "skrot": a.skrot, "aliasy": [a.skrot] + (a.alias or []), "status": "szkic"}
     dane["eventy"] = [e for e in dane["eventy"] if e["slug"] != slug] + [wpis]
     os.makedirs(os.path.dirname(sciezka), exist_ok=True)
     with open(sciezka, "w", encoding="utf-8") as f:
@@ -646,109 +769,119 @@ def cmd_dodaj_event(a):
     cel = os.path.join(ws, a.nazwa)
     for sc in STRUKTURA:
         os.makedirs(os.path.join(cel, sc), exist_ok=True)
-    readme = os.path.join(cel, "01 Informacje o evencie", "CO TU WRZUCIĆ.txt")
-    if not os.path.exists(readme):
-        with open(readme, "w", encoding="utf-8") as f:
-            f.write(README_01)
-    print(json.dumps({"event": wpis, "folder": cel}, ensure_ascii=False, indent=2))
+    ej = os.path.join(cel, "event.json")
+    if not os.path.exists(ej):
+        with open(ej, "w", encoding="utf-8") as f:
+            json.dump({"nazwa": a.nazwa, "skrot": a.skrot, "aliasy": wpis["aliasy"], "status": "szkic"},
+                      f, ensure_ascii=False, indent=2)
+    print(json.dumps({"event": wpis, "kopia_robocza": cel, "event_json": ej,
+                      "na_dysku_zaloz": [a.nazwa + "/" + x for x in STRUKTURA if "/" not in x],
+                      "co_tu_wrzucic": README_01}, ensure_ascii=False, indent=2))
 
 
-# ---------------------------------------------------------------- plan w Canvie
+# ---------------------------------------------------------------- plany na Dysku: nazwy, okresy, blokada
 
-def _event_planu(plan):
-    for nazwa in (plan.get("event"), plan.get("event_nazwa")):
-        if not nazwa:
-            continue
-        try:
-            return event_json(znajdz_event(nazwa))
-        except SystemExit:
-            pass
-    return {}
+PLAN_RE = re.compile(r"plan v(\d+) \((\d{4}-\d{2}-\d{2}) do (\d{4}-\d{2}-\d{2})\)", re.IGNORECASE)
 
 
-def cmd_canva_eksport(a):
-    """Strony projektu planu w Canvie (tekst dla ludzi + notatki z danymi)."""
+def cmd_nazwa_planu(a):
+    """Konektor nie nadpisuje plikow, wiec kazda zapisana wersja planu to nowy plik o tej nazwie."""
     plan = wczytaj_plan(a.plan)
-    if a.oznacz:
-        plan.setdefault("kampania", os.path.basename(os.path.dirname(os.path.abspath(a.plan))))
-        plan["aktualizacja"] = dt.datetime.now().isoformat(timespec="seconds")
-        _zapisz_plan(a.plan, plan)
-    wynik = lab_chmura.eksport(plan, _event_planu(plan))
-    tekst = json.dumps(wynik, ensure_ascii=False, indent=2)
-    if a.wyjscie:
-        with open(a.wyjscie, "w", encoding="utf-8") as f:
-            f.write(tekst)
-        print(json.dumps({k: wynik[k] for k in ("id", "wersja", "sha", "liczba_stron", "nazwy")}, ensure_ascii=False, indent=2))
-    else:
-        print(tekst)
+    o = plan.get("okres", {})
+    statusy = {}
+    for poz in plan.get("pozycje", []):
+        statusy[poz.get("status", "?")] = statusy.get(poz.get("status", "?"), 0) + 1
+    zmiana = (plan.get("aktualizacja") or "").replace("T", " ")[:16]
+    print(json.dumps({
+        "tytul": "plan v%s (%s do %s).json" % (plan.get("wersja", 1), o.get("od"), o.get("do")),
+        "opis": "Agent AI Marketing · %s · wersja %s · %d pozycji (%s) · zmiana %s, %s" % (
+            plan.get("event_nazwa") or plan.get("event"), plan.get("wersja", 1), len(plan.get("pozycje", [])),
+            ", ".join("%s %d" % kv for kv in sorted(statusy.items())), zmiana, plan.get("zmienil", "?")),
+        "kampania": plan.get("kampania"),
+    }, ensure_ascii=False, indent=2))
 
 
-def cmd_canva_import(a):
-    """Pobiera plan z eksportu PPTX projektu planu (albo z tekstu notatek) i godzi go z kopią lokalną."""
-    try:
-        chmura, meta = lab_chmura.odczyt(a.zrodlo)
-    except ValueError as e:
-        print(json.dumps({"akcja": "blad", "powod": str(e)}, ensure_ascii=False, indent=2))
-        sys.exit(1)
-    teraz = dt.datetime.now().isoformat(timespec="seconds")
-    znacznik = {"id": meta["id"], "wersja": meta["wersja"], "sha": meta["sha"], "strony": meta["strony"],
-                "zsynchronizowano": teraz}
-    wynik = {"plan": meta, "akcja": None}
-    if not a.do:
-        print(json.dumps({"akcja": "odczytano", "plan": meta, "pozycji": len(chmura.get("pozycje", []))},
-                         ensure_ascii=False, indent=2))
+def cmd_nachodzi(a):
+    """Po nazwach plikow z Dysku: najnowsza wersja planu w kazdym folderze i czy nachodzi na okres."""
+    plany = []
+    for n in a.nazwy:
+        m = PLAN_RE.search(n)
+        if m:
+            plany.append({"nazwa": n, "wersja": int(m.group(1)), "od": m.group(2), "do": m.group(3),
+                          "nachodzi": not (m.group(3) < a.od or m.group(2) > a.do)})
+    print(json.dumps({"okres": {"od": a.od, "do": a.do}, "plany": plany,
+                      "nachodzi": [p["nazwa"] for p in plany if p["nachodzi"]]}, ensure_ascii=False, indent=2))
+    sys.exit(1 if any(p["nachodzi"] for p in plany) else 0)
+
+
+BLOKADA_RE = re.compile(r"Agent AI: pracuje (.+?) \((.+?)\) od (\d{4}-\d{2}-\d{2}T\d{2}:\d{2})")
+
+
+def _ja():
+    import socket
+    return {"kto": kto(), "komputer": socket.gethostname().split(".")[0]}
+
+
+def cmd_blokada(a):
+    """Blokada = plik planu na Dysku ustawiony jako tylko do odczytu (update_file readOnly) z powodem
+    w tej postaci. Wygasa po kilku godzinach, zeby zapomniana blokada nie zatrzymala zespolu."""
+    ja = _ja()
+    if a.nowa:
+        print(json.dumps({"readOnlyReason": "Agent AI: pracuje %s (%s) od %s" % (
+            ja["kto"], ja["komputer"], dt.datetime.now().isoformat(timespec="minutes"))}, ensure_ascii=False))
         return
-    if os.path.exists(a.do):
-        lokalny = wczytaj_plan(a.do)
-        sha_lok = lab_chmura.sha12(lab_chmura.serializuj(lokalny))
-        ostatni = (lokalny.get("_chmura") or {}).get("sha")
-        if lokalny.get("id") and lokalny.get("id") != meta["id"] and not a.wymus:
-            wynik.update(akcja="inny_plan", powod="lokalny plan %s, w Canvie %s" % (lokalny.get("id"), meta["id"]))
-            print(json.dumps(wynik, ensure_ascii=False, indent=2))
-            sys.exit(1)
-        if sha_lok == meta["sha"]:
-            lokalny["_chmura"] = znacznik
-            _zapisz_plan(a.do, lokalny)
-            wynik["akcja"] = "bez_zmian"
-        elif ostatni == meta["sha"] and not a.wymus:
-            wynik.update(akcja="lokalne_zmiany_do_wyslania",
-                         powod="w Canvie jest wersja, którą ten komputer już zna; lokalnie są nowsze zmiany")
-        elif (not ostatni or ostatni != sha_lok) and not a.wymus:
-            kopia = a.do.replace(".json", ".chmura.json")
-            chmura["_chmura"] = znacznik
-            _zapisz_plan(kopia, chmura)
-            wynik.update(akcja="konflikt", kopia_z_canvy=kopia,
-                         powod=("plan zmienił się i lokalnie, i w Canvie od ostatniej synchronizacji" if ostatni
-                                else "lokalny plan nigdy nie był zsynchronizowany z Canvą i różni się od wersji w Canvie"))
-        else:
-            shutil.copy2(a.do, a.do + ".bak")
-            chmura["_chmura"] = znacznik
-            _zapisz_plan(a.do, chmura)
-            wynik["akcja"] = "pobrano"
-    else:
-        os.makedirs(os.path.dirname(os.path.abspath(a.do)), exist_ok=True)
-        chmura["_chmura"] = znacznik
-        _zapisz_plan(a.do, chmura)
-        wynik["akcja"] = "pobrano"
-    print(json.dumps(wynik, ensure_ascii=False, indent=2))
-    sys.exit(0 if wynik["akcja"] in ("pobrano", "bez_zmian") else 2)
-
-
-def cmd_canva_porownaj(a):
-    with open(a.strony, encoding="utf-8") as f:
-        oczekiwane = json.load(f)
-    wynik = lab_chmura.porownaj(oczekiwane, a.zrodlo)
-    print(json.dumps(wynik, ensure_ascii=False, indent=2))
-    sys.exit(0 if wynik["ok"] else 1)
+    m = BLOKADA_RE.search(a.powod or "")
+    if not m:
+        print(json.dumps({"aktywna": False, "powod": a.powod or None}, ensure_ascii=False))
+        return
+    od = dt.datetime.fromisoformat(m.group(3))
+    wygasla = dt.datetime.now() - od > dt.timedelta(hours=BLOKADA_GODZIN)
+    moja = m.group(1) == ja["kto"] and m.group(2) == ja["komputer"]
+    print(json.dumps({"aktywna": not wygasla, "wygasla": wygasla, "moja": moja, "kto": m.group(1),
+                      "komputer": m.group(2), "od": m.group(3)}, ensure_ascii=False, indent=2))
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("gdzie").set_defaults(f=cmd_gdzie)
-    p = sub.add_parser("init")
-    p.add_argument("--workspace")
-    p.set_defaults(f=cmd_init)
+    p = sub.add_parser("podlacz")
+    p.add_argument("--id", required=True)
+    p.add_argument("--nazwa", required=True)
+    p.add_argument("--link")
+    p.add_argument("--uzytkownik")
+    p.set_defaults(f=cmd_podlacz)
+    p = sub.add_parser("robocze")
+    p.add_argument("event")
+    p.add_argument("--kampania")
+    p.set_defaults(f=cmd_robocze)
+    p = sub.add_parser("z-dysku")
+    p.add_argument("wynik")
+    p.add_argument("--do", required=True)
+    p.set_defaults(f=cmd_z_dysku)
+    p = sub.add_parser("na-dysk")
+    p.add_argument("plik")
+    p.set_defaults(f=cmd_na_dysk)
+    sub.add_parser("wiedza").set_defaults(f=cmd_wiedza)
+    p = sub.add_parser("nasiona")
+    p.add_argument("event")
+    p.set_defaults(f=cmd_nasiona)
+    p = sub.add_parser("nazwa-planu")
+    p.add_argument("plan")
+    p.set_defaults(f=cmd_nazwa_planu)
+    p = sub.add_parser("nachodzi")
+    p.add_argument("--od", required=True)
+    p.add_argument("--do", required=True)
+    p.add_argument("nazwy", nargs="*")
+    p.set_defaults(f=cmd_nachodzi)
+    p = sub.add_parser("blokada")
+    g = p.add_mutually_exclusive_group(required=True)
+    g.add_argument("--nowa", action="store_true")
+    g.add_argument("--powod")
+    p.set_defaults(f=cmd_blokada)
+    p = sub.add_parser("sprzataj")
+    p.add_argument("event", nargs="?")
+    p.set_defaults(f=cmd_sprzataj)
     sub.add_parser("eventy").set_defaults(f=cmd_eventy)
     for nazwa, f in (("czytaj", cmd_czytaj), ("progi", cmd_progi), ("zdjecia", cmd_zdjecia)):
         p = sub.add_parser(nazwa)
@@ -794,26 +927,12 @@ def main():
     p.add_argument("skrot")
     p.add_argument("--alias", action="append")
     p.set_defaults(f=cmd_dodaj_event)
-    p = sub.add_parser("canva-eksport")
-    p.add_argument("plan")
-    p.add_argument("--wyjscie")
-    p.add_argument("--oznacz", action="store_true")
-    p.set_defaults(f=cmd_canva_eksport)
-    p = sub.add_parser("canva-import")
-    p.add_argument("zrodlo")
-    p.add_argument("--do")
-    p.add_argument("--wymus", action="store_true")
-    p.set_defaults(f=cmd_canva_import)
-    p = sub.add_parser("canva-porownaj")
-    p.add_argument("strony")
-    p.add_argument("zrodlo")
-    p.set_defaults(f=cmd_canva_porownaj)
     p = sub.add_parser("utc")
     p.add_argument("data")
     p.add_argument("godzina")
     p.set_defaults(f=cmd_utc)
     p = sub.add_parser("stan")
-    for opt in ("--event", "--kampania", "--plan", "--plan-canva", "--etap", "--status", "--postep", "--opis", "--log", "--czeka"):
+    for opt in ("--event", "--kampania", "--plan", "--etap", "--status", "--postep", "--opis", "--log", "--czeka"):
         p.add_argument(opt)
     p.add_argument("--agent", action="append")
     p.add_argument("--reset", action="store_true")

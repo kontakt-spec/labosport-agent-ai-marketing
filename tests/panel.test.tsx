@@ -33,7 +33,7 @@ test('panel pokazuje event, bramkę akceptacji i agenta, który pracuje', async 
   on('fs.exists', () => ({ value: true }))
   on('fs.stat', () => ({ value: { kind: 'file', size: 10, mtimeMs: 1, isLink: false } }))
   on('fs.read', (_, e) => ({
-    value: e.path.endsWith('config.json') ? JSON.stringify({ workspace: '/ws' }) : JSON.stringify(STAN),
+    value: e.path.endsWith('config.json') ? JSON.stringify({ dysk: { id: 'abc', nazwa: 'LABOSPORT Marketing AI', link: 'https://drive.google.com/drive/folders/abc' } }) : JSON.stringify(STAN),
   }))
   on('tool.call', () => ({ result: {} }))
   on('clock.now', () => ({ value: Date.UTC(2026, 9, 25, 14, 40) }))
@@ -41,6 +41,7 @@ test('panel pokazuje event, bramkę akceptacji i agenta, który pracuje', async 
 
   await $.session.start({ cwd: '/', surface: 'desktop', isInteractive: true })
   await $.tool.call({ tool: 'mcp__canva__copy-design', design_id: 'DAAAAAAAAAA' } as never)
+  await $.tool.call({ tool: 'mcp__gdrive__search_files', query: "title = 'event.json'" } as never)
 
   for (const surface of ['terminal', 'desktop'] as const) {
     const ui = await $.ui.mount({ ...PANE, surface })
@@ -48,6 +49,9 @@ test('panel pokazuje event, bramkę akceptacji i agenta, który pracuje', async 
     expect((await ui.find({ type: 'Text', text: /Czeka na Was/ }))?.text).toContain('Akceptacja planu')
     expect((await ui.find({ type: 'Text', text: /Planista/ }))?.text).toContain('gotowe')
     expect((await ui.find({ type: 'Text', text: /Canva: kopiuję wzorzec/ }))?.text).toContain('Canva')
+    expect(await ui.find({ type: 'Text', text: /Dysk: szukam plików/ })).toBeDefined()
+    expect(await ui.find({ type: 'Text', text: /Dysk Google: LABOSPORT Marketing AI/ })).toBeDefined()
+    expect(await ui.find({ key: 'folder' })).toBeDefined()
     await ui.unmount()
   }
 })

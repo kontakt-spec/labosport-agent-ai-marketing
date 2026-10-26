@@ -5,21 +5,22 @@ description: Pisanie opisów postów (caption) i pierwszych komentarzy z linkiem
 
 # Opisy i komentarze
 
-Zanim napiszesz pierwsze zdanie, przeczytaj:
-1. `${CLAUDE_PLUGIN_ROOT}/wiedza/glos-marki.md`
-2. `<event>/profil-eventu.md`, sekcja o opisach (hashtagi, emoji, formuły)
-3. `<event>/event.json`, sekcja `styl_opisow` i `zakazane_slowa`
-4. `${CLAUDE_PLUGIN_ROOT}/wiedza/czarna-lista.txt`
+Zanim napiszesz pierwsze zdanie, przeczytaj z Dysku Google (procedura: `${CLAUDE_PLUGIN_ROOT}/wiedza/dysk.md`, B i C):
+1. `Zmiany dla Agenta AI`: poprawki zespołu, mają pierwszeństwo
+2. `Głos marki` z `00 Baza wiedzy`
+3. `Profil eventu`, sekcja o opisach (hashtagi, emoji, formuły)
+4. `event.json`, sekcja `styl_opisow` i `zakazane_slowa`
+5. `Czarna lista zwrotów` z `00 Baza wiedzy`, pobrana do kopii roboczej (z niej korzysta `lint`)
 
 `LAB="python3 -I ${CLAUDE_PLUGIN_ROOT}/skrypty/lab.py"`
 
 ## Dla każdej pozycji
 
 1. Weź z planu: `temat`, `naglowek`, `opis_szkic`, `uzasadnienie`, `uwagi_klienta`, `kategoria`.
-2. Sprawdź fakty, które wejdą do tekstu (daty, ceny, godziny, dystanse): `$LAB progi <EVENT>`, `$LAB czytaj <EVENT>`. Fakt, którego nie ma w danych, nie wchodzi do tekstu.
-3. Napisz opis według budowy z glos-marki.md. Długość według rodzaju (użytkowy, sprzedażowy, opowieść).
+2. Sprawdź fakty, które wejdą do tekstu (daty, ceny, godziny, dystanse): `$LAB progi <EVENT>` i dokumenty eventu z Dysku. Fakt, którego nie ma w danych, nie wchodzi do tekstu.
+3. Napisz opis według budowy z `Głos marki`. Długość według rodzaju (użytkowy, sprzedażowy, opowieść).
 4. Napisz pierwszy komentarz według formuły eventu (`styl_opisow.pierwszy_komentarz`). Post bez linku do zapisów (np. galeria) dostaje link właściwy dla tematu albo nie dostaje komentarza.
-5. Zapisz do `<kampania>/opisy/<ID>.md`:
+5. Zapisz w kopii roboczej (`$LAB robocze <EVENT> --kampania "<kampania>"`) do `<kampania>/opisy/<ID>.md`:
    ```
    <opis>
 
@@ -28,7 +29,7 @@ Zanim napiszesz pierwsze zdanie, przeczytaj:
    ```
 6. `$LAB lint --event <EVENT> --plik <kampania>/opisy/<ID>.md`. Błąd → popraw i sprawdź ponownie. Uwagi → przeczytaj i zdecyduj świadomie.
 
-Na koniec `$LAB opisy-scal <plan.json>`.
+Na koniec `$LAB opisy-scal <plan.json>`. Na Dysk zapisuje koordynator (nowa wersja planu).
 
 ## Test na ludzkie brzmienie (zrób go dla każdego tekstu)
 

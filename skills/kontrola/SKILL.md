@@ -9,6 +9,8 @@ Kontroler jest niezależny: nie poprawia, tylko znajduje i opisuje problem tak, 
 
 `LAB="python3 -I ${CLAUDE_PLUGIN_ROOT}/skrypty/lab.py"`
 
+Kontrolujesz plan świeżo pobrany z Dysku (`${CLAUDE_PLUGIN_ROOT}/wiedza/dysk.md`, D2) i fakty z dokumentów eventu na Dysku. Najpierw `Zmiany dla Agenta AI`: poprawka zespołu, która nie została zastosowana, to błąd do zgłoszenia.
+
 ## Lista kontrolna dla każdej pozycji
 
 **1. Fakty (błąd krytyczny, jeśli się nie zgadza)**
@@ -22,10 +24,10 @@ Kontroler jest niezależny: nie poprawia, tylko znajduje i opisuje problem tak, 
 **2. Tekst**
 - `$LAB sprawdz-plan <plan.json>`: zero błędów.
 - Ortografia i interpunkcja po polsku (przeczytaj każdy tekst w całości: opis, komentarz, nagłówek, podtytuł, slajdy). Literówki w nazwach miejscowości to błąd krytyczny.
-- Brzmienie: test z glos-marki.md. Zgłoś zdania, które brzmią jak szablon AI, z propozycją kierunku.
+- Brzmienie: test z `Głos marki` (`00 Baza wiedzy`). Zgłoś zdania, które brzmią jak szablon AI, z propozycją kierunku.
 - Słowa zakazane eventu (CTM: „Ironman”).
 
-**3. Grafika (eksport PNG z `<kampania>/eksport/`, czytaj narzędziem Read)**
+**3. Grafika (miniatury z `read-design` w Canvie albo PNG wyeksportowany do kopii roboczej `<kampania>/eksport/`, czytaj narzędziem Read)**
 - Tekst na grafice identyczny z planem, bez resztek tekstu wzorca.
 - Nic nie wychodzi poza kadr, nic nie nachodzi na logo i twarze.
 - Czytelność na telefonie: nagłówek widoczny w miniaturze.
@@ -50,4 +52,4 @@ Uwagi (do decyzji):
 OK: <lista ID bez uwag>
 ```
 
-Pozycje OK oznacz: `$LAB ustaw <plan.json> <ID1,ID2> status=sprawdzony`.
+Pozycje OK oznacz: `$LAB ustaw <plan.json> <ID1,ID2> status=sprawdzony` (kopia robocza; na Dysk zapisuje koordynator).

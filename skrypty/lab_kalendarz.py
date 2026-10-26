@@ -30,11 +30,40 @@ def _cena(tekst):
     return int(m.group(1).replace(" ", "").replace(" ", "")) if m else None
 
 
+def bloki_z_tekstu(tekst):
+    """Te same bloki co z .docx, ale z tekstu z tabelami Markdown (tak konektor Google Drive
+    oddaje dokumenty Word, Dokumenty Google i Arkusze)."""
+    wynik, tabela = [], None
+    for linia in tekst.splitlines():
+        l = linia.strip()
+        if l.startswith("|"):
+            komorki = [k.strip() for k in l.strip("|").split("|")]
+            if all(re.fullmatch(r":?-{1,}:?", k) for k in komorki if k):
+                continue
+            if tabela is None:
+                tabela = []
+                wynik.append(("tabela", tabela))
+            tabela.append(komorki)
+            continue
+        tabela = None
+        if l:
+            wynik.append(("p", l))
+    return wynik
+
+
+def progi_z_tekstu(tekst):
+    return _progi_z_blokow(bloki_z_tekstu(tekst))
+
+
 def progi_z_docx(sciezka):
-    """Czyta dokument progow: naglowek (dystans) + tabela (oplata, pula, termin, status)."""
+    return _progi_z_blokow(bloki(sciezka))
+
+
+def _progi_z_blokow(lista):
+    """Dokument progow: naglowek (dystans) + tabela (oplata, pula, termin, status)."""
     wynik = []
     naglowek = None
-    for rodzaj, tresc in bloki(sciezka):
+    for rodzaj, tresc in lista:
         if rodzaj == "p":
             if tresc.strip():
                 naglowek = tresc.strip()
