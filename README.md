@@ -16,6 +16,8 @@ Wersja 0.1 · przygotowane przez Pawła Czapczyka (ScaleUP AI) dla LABOSPORT Pol
  5. Publikacja           Wy planujecie publikację w Postiz; stories dostajecie jako pliki
 ```
 
+**Jeden plan w chmurze.** Każdy plan kampanii jest zapisany w Canvie, w folderze `Agent AI Marketing/<event>/<kampania>`, razem z grafikami tej kampanii. Agent na każdym komputerze pobiera plan stamtąd, więc cały zespół pracuje na tym samym planie i nikt nie zrobi drugiego planu na ten sam okres.
+
 Zespół agentów: **Analityk** (uczy się z historii eventu), **Planista**, **Grafik**, **Copywriter**, **Kontroler**, **Wydawca**. Panel „Agent AI Marketing” obok rozmowy pokazuje etap, postęp i to, który agent pracuje.
 
 ## Instalacja
@@ -86,7 +88,17 @@ LABOSPORT Marketing/
 
 ## W Canvie
 
-Agent pracuje tylko w folderze `Agent AI Marketing` (podfolder na event i rok). Wasze projekty czyta i kopiuje, nigdy ich nie zmienia. Grafiki powstają na Waszych układach: kopia sprawdzonej strony, nowy tekst, nowe zdjęcie.
+```
+Agent AI Marketing/
+  CTM 2027/
+    _wzorce/                         układy grafik skopiowane z Waszych projektów
+    2026-11 listopad i grudzień/     jedna kampania = jeden folder
+      CTM2027_PLAN_2026-11           plan (oryginał, z którego korzysta każdy komputer)
+      CTM2027_posty_2026-11          grafiki postów tej kampanii
+      CTM2027_stories_2026-11        stories
+```
+
+Agent pracuje tylko w folderze `Agent AI Marketing`. Wasze projekty czyta i kopiuje, nigdy ich nie zmienia. Grafiki powstają na Waszych układach: kopia sprawdzonej strony, nowy tekst, nowe zdjęcie. Projekt planu pokazuje listę postów ze statusami; dane dla agenta są w notatkach stron, więc nie usuwajcie stron ani notatek planu.
 
 ## Prywatność i dane
 

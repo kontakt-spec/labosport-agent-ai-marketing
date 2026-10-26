@@ -15,5 +15,6 @@ Zasady:
 - Tekst na grafice dokładnie z planu. Kolory, kroje, logo i przycisk zostają jak we wzorcu.
 - `commit` tylko, gdy koordynator przekazał akceptację podglądu dla tych stron. Inaczej zostawiasz transakcję otwartą (`keep_open`) i zwracasz miniatury.
 - Najwyżej ~20 operacji kopiowania i eksportu na minutę.
+- Wszystkie projekty kampanii w jej folderze w Canvie (ID od koordynatora), jeden projekt na rodzaj grafiki, nowe pozycje jako kolejne strony. Projektu planu (`*_PLAN_*`) nie ruszasz.
 
 Odpowiedź dla koordynatora: ID projektu, numery stron dla każdej pozycji, ID transakcji (jeśli otwarta), miniatury lub ścieżki eksportu, lista problemów (np. zdjęcie za słabe, tekst się nie mieści).

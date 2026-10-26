@@ -17,6 +17,9 @@ Uzycie (zawsze przez python3 -I, sciezka z katalogu pluginu):
   lab.py opisy-scal PLAN.json           opisy/<ID>.md -> plan.json
   lab.py miniatury EVENT                miniatury zdjec do przegladu (sips)
   lab.py dodaj-event "Nazwa" SKROT      nowy event w folderze roboczym
+  lab.py canva-eksport PLAN.json [--oznacz] [--wyjscie P]   strony projektu planu do zapisu w Canvie
+  lab.py canva-import PLIK.pptx --do PLAN.json   pobranie planu z Canvy (eksport PPTX albo tekst notatek)
+  lab.py canva-porownaj STRONY.json PLIK.pptx   które strony planu w Canvie trzeba zapisać jeszcze raz
   lab.py utc RRRR-MM-DD GG:MM           czas w Polsce -> UTC dla Postiz
   lab.py stan [--event ..] [--kampania ..] [--etap ..] [--status ..] [--postep a/b]
               [--opis ..] [--log ..] [--czeka ..] [--agent nazwa:zadanie:status]
@@ -34,6 +37,7 @@ KATALOG = os.path.dirname(os.path.abspath(__file__))
 PLUGIN = os.path.dirname(KATALOG)
 sys.path.insert(0, KATALOG)
 
+import lab_chmura  # noqa: E402
 import lab_docx  # noqa: E402
 import lab_kalendarz  # noqa: E402
 import lab_lint  # noqa: E402
@@ -451,6 +455,8 @@ def cmd_stan(a):
         stan["kampania"] = a.kampania
     if a.plan:
         stan["plan"] = os.path.abspath(a.plan)
+    if a.plan_canva:
+        stan["plan_canva"] = a.plan_canva
     if a.etap:
         if a.etap not in ETAPY and a.etap != "gotowe":
             sys.exit("Nieznany etap %r. Etapy: %s" % (a.etap, ", ".join(ETAPY)))
@@ -505,8 +511,16 @@ def _ustaw_pole(obj, sciezka, wartosc):
 
 
 def cmd_ustaw(a):
-    """lab.py ustaw PLAN ID pole=wartosc [pole.pod=wartosc ...]; ID moze byc lista po przecinku."""
+    """lab.py ustaw PLAN.json ID pole=wartosc [pole.pod=wartosc ...]; ID moze byc lista po przecinku,
+    '*' oznacza wszystkie pozycje, a slowo PLAN zmienia pola naglowka planu."""
     plan = wczytaj_plan(a.plan)
+    if a.id == "PLAN":
+        for przypisanie in a.pola:
+            k, _, v = przypisanie.partition("=")
+            _ustaw_pole(plan, k, v)
+        _zapisz_plan(a.plan, plan)
+        print(json.dumps({"zmienione": ["PLAN"]}, ensure_ascii=False))
+        return
     ids = set(a.id.split(","))
     trafione = []
     for p in plan.get("pozycje", []):
@@ -639,6 +653,95 @@ def cmd_dodaj_event(a):
     print(json.dumps({"event": wpis, "folder": cel}, ensure_ascii=False, indent=2))
 
 
+# ---------------------------------------------------------------- plan w Canvie
+
+def _event_planu(plan):
+    for nazwa in (plan.get("event"), plan.get("event_nazwa")):
+        if not nazwa:
+            continue
+        try:
+            return event_json(znajdz_event(nazwa))
+        except SystemExit:
+            pass
+    return {}
+
+
+def cmd_canva_eksport(a):
+    """Strony projektu planu w Canvie (tekst dla ludzi + notatki z danymi)."""
+    plan = wczytaj_plan(a.plan)
+    if a.oznacz:
+        plan.setdefault("kampania", os.path.basename(os.path.dirname(os.path.abspath(a.plan))))
+        plan["aktualizacja"] = dt.datetime.now().isoformat(timespec="seconds")
+        _zapisz_plan(a.plan, plan)
+    wynik = lab_chmura.eksport(plan, _event_planu(plan))
+    tekst = json.dumps(wynik, ensure_ascii=False, indent=2)
+    if a.wyjscie:
+        with open(a.wyjscie, "w", encoding="utf-8") as f:
+            f.write(tekst)
+        print(json.dumps({k: wynik[k] for k in ("id", "wersja", "sha", "liczba_stron", "nazwy")}, ensure_ascii=False, indent=2))
+    else:
+        print(tekst)
+
+
+def cmd_canva_import(a):
+    """Pobiera plan z eksportu PPTX projektu planu (albo z tekstu notatek) i godzi go z kopią lokalną."""
+    try:
+        chmura, meta = lab_chmura.odczyt(a.zrodlo)
+    except ValueError as e:
+        print(json.dumps({"akcja": "blad", "powod": str(e)}, ensure_ascii=False, indent=2))
+        sys.exit(1)
+    teraz = dt.datetime.now().isoformat(timespec="seconds")
+    znacznik = {"id": meta["id"], "wersja": meta["wersja"], "sha": meta["sha"], "strony": meta["strony"],
+                "zsynchronizowano": teraz}
+    wynik = {"plan": meta, "akcja": None}
+    if not a.do:
+        print(json.dumps({"akcja": "odczytano", "plan": meta, "pozycji": len(chmura.get("pozycje", []))},
+                         ensure_ascii=False, indent=2))
+        return
+    if os.path.exists(a.do):
+        lokalny = wczytaj_plan(a.do)
+        sha_lok = lab_chmura.sha12(lab_chmura.serializuj(lokalny))
+        ostatni = (lokalny.get("_chmura") or {}).get("sha")
+        if lokalny.get("id") and lokalny.get("id") != meta["id"] and not a.wymus:
+            wynik.update(akcja="inny_plan", powod="lokalny plan %s, w Canvie %s" % (lokalny.get("id"), meta["id"]))
+            print(json.dumps(wynik, ensure_ascii=False, indent=2))
+            sys.exit(1)
+        if sha_lok == meta["sha"]:
+            lokalny["_chmura"] = znacznik
+            _zapisz_plan(a.do, lokalny)
+            wynik["akcja"] = "bez_zmian"
+        elif ostatni == meta["sha"] and not a.wymus:
+            wynik.update(akcja="lokalne_zmiany_do_wyslania",
+                         powod="w Canvie jest wersja, którą ten komputer już zna; lokalnie są nowsze zmiany")
+        elif (not ostatni or ostatni != sha_lok) and not a.wymus:
+            kopia = a.do.replace(".json", ".chmura.json")
+            chmura["_chmura"] = znacznik
+            _zapisz_plan(kopia, chmura)
+            wynik.update(akcja="konflikt", kopia_z_canvy=kopia,
+                         powod=("plan zmienił się i lokalnie, i w Canvie od ostatniej synchronizacji" if ostatni
+                                else "lokalny plan nigdy nie był zsynchronizowany z Canvą i różni się od wersji w Canvie"))
+        else:
+            shutil.copy2(a.do, a.do + ".bak")
+            chmura["_chmura"] = znacznik
+            _zapisz_plan(a.do, chmura)
+            wynik["akcja"] = "pobrano"
+    else:
+        os.makedirs(os.path.dirname(os.path.abspath(a.do)), exist_ok=True)
+        chmura["_chmura"] = znacznik
+        _zapisz_plan(a.do, chmura)
+        wynik["akcja"] = "pobrano"
+    print(json.dumps(wynik, ensure_ascii=False, indent=2))
+    sys.exit(0 if wynik["akcja"] in ("pobrano", "bez_zmian") else 2)
+
+
+def cmd_canva_porownaj(a):
+    with open(a.strony, encoding="utf-8") as f:
+        oczekiwane = json.load(f)
+    wynik = lab_chmura.porownaj(oczekiwane, a.zrodlo)
+    print(json.dumps(wynik, ensure_ascii=False, indent=2))
+    sys.exit(0 if wynik["ok"] else 1)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -691,12 +794,26 @@ def main():
     p.add_argument("skrot")
     p.add_argument("--alias", action="append")
     p.set_defaults(f=cmd_dodaj_event)
+    p = sub.add_parser("canva-eksport")
+    p.add_argument("plan")
+    p.add_argument("--wyjscie")
+    p.add_argument("--oznacz", action="store_true")
+    p.set_defaults(f=cmd_canva_eksport)
+    p = sub.add_parser("canva-import")
+    p.add_argument("zrodlo")
+    p.add_argument("--do")
+    p.add_argument("--wymus", action="store_true")
+    p.set_defaults(f=cmd_canva_import)
+    p = sub.add_parser("canva-porownaj")
+    p.add_argument("strony")
+    p.add_argument("zrodlo")
+    p.set_defaults(f=cmd_canva_porownaj)
     p = sub.add_parser("utc")
     p.add_argument("data")
     p.add_argument("godzina")
     p.set_defaults(f=cmd_utc)
     p = sub.add_parser("stan")
-    for opt in ("--event", "--kampania", "--plan", "--etap", "--status", "--postep", "--opis", "--log", "--czeka"):
+    for opt in ("--event", "--kampania", "--plan", "--plan-canva", "--etap", "--status", "--postep", "--opis", "--log", "--czeka"):
         p.add_argument(opt)
     p.add_argument("--agent", action="append")
     p.add_argument("--reset", action="store_true")

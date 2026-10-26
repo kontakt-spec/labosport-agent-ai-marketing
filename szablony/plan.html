@@ -20,6 +20,7 @@ a{color:inherit}
 .top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--tx2);border-bottom:1px solid var(--line);padding-bottom:14px}
 h1{font-size:44px;line-height:1.05;margin:36px 0 8px;font-weight:900;letter-spacing:-.01em}
 .sub{color:var(--tx2);font-size:17px;margin:0 0 28px}
+.canva{margin:14px 0 0;font-size:13px;color:var(--tx2)} .canva a{color:var(--tx);font-weight:700}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:28px}
 .stat{background:var(--panel);padding:16px 18px}
 .stat b{display:block;font-size:28px;font-weight:300}
@@ -104,6 +105,7 @@ textarea.on{display:block}
 <body>
 <div class="wrap">
   <div class="top"><span>LABOSPORT · Agent AI Marketing</span><span id="wersja"></span></div>
+  <p class="canva" id="canva"></p>
   <h1 id="tytul"></h1>
   <p class="sub" id="okres"></p>
   <div class="stats" id="stats"></div>
@@ -158,6 +160,12 @@ function init(){
   document.getElementById("wersja").textContent = "Wersja " + (PLAN.wersja || 1) + " · " + (PLAN.status_tekst || "do akceptacji");
   document.getElementById("tytul").textContent = PLAN.event_nazwa || PLAN.event;
   document.getElementById("okres").textContent = "Plan na okres od " + dataPL(PLAN.okres.od) + " do " + dataPL(PLAN.okres.do);
+  const cv = document.getElementById("canva");
+  if (PLAN.canva && PLAN.canva.plan_link){
+    cv.append(document.createTextNode("Oryginał planu: "));
+    const a = el("a", null, "plan w Canvie"); a.href = PLAN.canva.plan_link; a.target = "_blank"; cv.append(a);
+    cv.append(document.createTextNode(" · ten podgląd to kopia z " + (PLAN.aktualizacja || "").replace("T", ", ")));
+  } else cv.textContent = "Plan nie jest jeszcze zapisany w Canvie.";
   document.getElementById("zalozenia").textContent = PLAN.zalozenia || "";
   const k = document.getElementById("kamienie");
   (PLAN.kamienie || []).forEach(m => { k.append(el("div","d", dataPL(m.data))); k.append(el("div", null, m.opis)); });

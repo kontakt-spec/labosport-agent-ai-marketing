@@ -10,6 +10,10 @@
    - „Wrzuć posty do Postiz”
 3. Po prawej panel pokazuje etap i agentów. Pole „Czeka na Was” mówi, co jest do zrobienia po Waszej stronie.
 
+## Plan jest w Canvie
+
+Każdy plan zapisuje się w Canvie: `Agent AI Marketing/<event>/<kampania>/…_PLAN_…`. Na każdym komputerze wystarczy napisać „pokaż plan CTM” albo „co dalej?”, a agent pobierze aktualną wersję. Dzięki temu nie powstaną dwa plany na ten sam okres. W Canvie możecie przejrzeć listę postów i statusy, ale zmiany zlecajcie agentowi (nie usuwajcie stron ani notatek planu).
+
 ## Akceptacja planu
 
 1. Agent otwiera `plan.html` w przeglądarce.

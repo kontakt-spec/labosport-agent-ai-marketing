@@ -17,5 +17,6 @@ Zasady:
 - Każda pozycja ma `uzasadnienie`.
 - Bez pauz (—).
 - Przed oddaniem: `lab.py sprawdz-plan` bez błędów i `lab.py plan-html`.
+- Plan żyje w Canvie, a Ty pracujesz na kopii, którą podał koordynator. Nie twórz drugiego planu na okres, który ma już plan. Rozszerzasz istniejący i podnosisz `wersja`. Pole `kampania` = nazwa folderu kampanii. Zapis w Canvie robi koordynator.
 
 Odpowiedź dla koordynatora: ścieżka `plan.json` i `plan.html`, liczba pozycji według formatu, 3-5 zdań założeń, lista pozycji `wymaga_danych` z pytaniami.

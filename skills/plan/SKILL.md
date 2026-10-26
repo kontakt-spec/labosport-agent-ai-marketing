@@ -5,7 +5,11 @@ description: Planowanie komunikacji eventu LABOSPORT w social mediach (posty inf
 
 # Plan komunikacji
 
-Wynik: `plan.json` w `<event>/04 Plany i kampanie/<RRRR-MM opis okresu>/` i podgląd `plan.html` do akceptacji. Format pól: `${CLAUDE_PLUGIN_ROOT}/wiedza/formaty.md`.
+Wynik: plan kampanii zapisany w Canvie (jedno źródło prawdy dla zespołu), jego kopia robocza `plan.json` w `<event>/04 Plany i kampanie/<RRRR-MM opis okresu>/` i podgląd `plan.html` do akceptacji. Format pól: `${CLAUDE_PLUGIN_ROOT}/wiedza/formaty.md`. Zapis i pobieranie planu: `${CLAUDE_PLUGIN_ROOT}/wiedza/canva.md`, sekcja „Plan w Canvie”.
+
+## Krok 0: czy plan już istnieje
+
+Zanim zaczniesz układać cokolwiek, sprawdź Canvę (canva.md, punkt A): folder `Agent AI Marketing/<SKRÓT> <ROK>` i projekty `*_PLAN_*`. Plan, którego okres nachodzi na nowy, pobierasz i rozszerzasz (nowa wersja), zamiast tworzyć drugi. Gdy pracujesz jako agent bez dostępu do Canvy, koordynator robi ten krok za Ciebie i podaje Ci ścieżkę planu.
 
 `LAB="python3 -I ${CLAUDE_PLUGIN_ROOT}/skrypty/lab.py"`
 
@@ -41,7 +45,7 @@ Daty i ceny bierzesz tylko ze skryptów i dokumentów. Nie liczysz dni w głowie
 
 Pełne opisy (`opis`) pisze copywriter po akceptacji planu. Wyjątek: gdy LABOSPORT prosi o opisy już w planie.
 
-Nagłówek pliku: `id` (np. `CTM-2026-11`), `event` (slug), `event_nazwa`, `okres`, `wersja: 1`, `status: "do_akceptacji"`, `status_tekst`, `zalozenia` (5-8 zdań: faza, cel okresu, co sprzedajemy, ile czego, co celowo pomijamy), `kamienie` (data, opis, krotko), `styl` (`akcent`, `akcent2` z profilu), `zakazane_slowa`, `styl_opisow` (z `event.json`), `max_postow_dziennie: 1`.
+Nagłówek pliku: `id` (np. `CTM-2026-11`), `event` (slug), `event_nazwa`, `kampania` (nazwa folderu kampanii, ta sama lokalnie i w Canvie, np. `2026-11 listopad i grudzień`), `okres`, `wersja: 1`, `status: "do_akceptacji"`, `status_tekst`, `zalozenia` (5-8 zdań: faza, cel okresu, co sprzedajemy, ile czego, co celowo pomijamy), `kamienie` (data, opis, krotko), `styl` (`akcent`, `akcent2` z profilu), `zakazane_slowa`, `styl_opisow` (z `event.json`), `max_postow_dziennie: 1`.
 
 ID pozycji: `<SKRÓT>-<RRMM>-<NN>` według miesiąca publikacji, numerowane po kolei w miesiącu.
 
@@ -49,11 +53,13 @@ ID pozycji: `<SKRÓT>-<RRMM>-<NN>` według miesiąca publikacji, numerowane po k
 
 1. `$LAB sprawdz-plan <plan.json>`: zero błędów przed pokazaniem. Uwagi przeczytaj i zdecyduj.
 2. Przeczytaj nagłówki na głos w myślach: czy brzmią jak z banku nagłówków eventu? Czy każdy mówi jedną rzecz? Czy dystanse się zgadzają z progiem, o którym mowa?
-3. `$LAB plan-html <plan.json>` i `open "<folder>/plan.html"`.
+3. Zapis w Canvie (canva.md, punkt B) z weryfikacją eksportem PPTX. Robi go koordynator; jako agent oddajesz gotowy `plan.json`.
+4. `$LAB plan-html <plan.json>` i `open "<folder>/plan.html"`.
 
 ## Poprawki po decyzjach
 
 - `do_zmiany`: zmień według `uwagi_klienta`, status z powrotem `propozycja`, podnieś `wersja` w nagłówku.
 - `odrzucony`: zostaw w pliku (historia), nie zastępuj bez prośby.
 - Przesunięcie daty: sprawdź, czy nie łamie rytmu (1 post dziennie, wolny dzień w tygodniu).
+- Przed zmianami pobierz plan z Canvy (punkt C), po zmianach podnieś wersję i zapisz (punkt D).
 - Po zmianach znów `sprawdz-plan` i `plan-html`.

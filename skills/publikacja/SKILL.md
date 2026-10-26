@@ -23,6 +23,7 @@ Procedura i zasady: `${CLAUDE_PLUGIN_ROOT}/wiedza/postiz.md`. Przeczytaj przed p
 5. **Szkice.** `schedulePostTool`, `type: "draft"`, oba kanały w jednym wywołaniu, opis w `<p>`, pierwszy komentarz jako druga pozycja wątku. Partie po kilka postów.
 6. **Zapis.** `$LAB ustaw <plan.json> <ID> status=w_postiz postiz.post_id=<id> postiz.kanaly='["instagram","facebook"]'`.
 7. **Weryfikacja.** `postsListTool` za okres planu: każda pozycja jest w Postiz z dobrą datą i kanałem.
+8. Oddaj koordynatorowi listę ID szkiców; zapis statusów w planie w Canvie robi on (canva.md, punkt D). Przed wrzuceniem sprawdź w planie z Canvy, czy pozycja nie ma już `postiz.post_id` (ktoś mógł ją wrzucić z innego komputera).
 
 ## Stories
 

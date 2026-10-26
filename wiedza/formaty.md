@@ -33,4 +33,6 @@
 | `uwagi_klienta` | decyzja z akceptacji |
 | `canva`, `postiz`, `eksport` | uzupełnia system w trakcie produkcji |
 
-Nagłówek pliku planu: `id`, `event`, `event_nazwa`, `okres {od, do}`, `wersja`, `status`, `zalozenia`, `kamienie[]`, `styl {akcent, akcent2}`, `zakazane_slowa`, `styl_opisow`, `max_postow_dziennie`.
+Nagłówek pliku planu: `id`, `event`, `event_nazwa`, `kampania` (nazwa folderu kampanii lokalnie i w Canvie), `okres {od, do}`, `wersja` (rośnie przy każdej zmianie zapisanej w Canvie), `aktualizacja` (czas ostatniego zapisu), `status`, `zalozenia`, `kamienie[]`, `styl {akcent, akcent2}`, `zakazane_slowa`, `styl_opisow`, `max_postow_dziennie`, `canva {folder_eventu_id, folder_kampanii_id, plan_design_id, plan_link, posty_design_id, ...}`.
+
+`_chmura` (pisze skrypt `canva-import`): wersja, suma kontrolna i czas ostatniej synchronizacji z Canvą na tym komputerze. Nie trafia do Canvy.

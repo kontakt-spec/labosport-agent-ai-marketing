@@ -5,6 +5,7 @@ export type StanPanelu = {
   event?: string
   kampania?: string
   plan?: string
+  plan_canva?: string
   etap?: string
   etapy?: Record<string, StatusEtapu>
   postep?: { zrobione?: number; wszystkie?: number; opis?: string }

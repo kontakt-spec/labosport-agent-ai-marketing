@@ -23,7 +23,10 @@ def main():
             if stan.get("czeka_na"):
                 tekst += " Czeka na zespół: %s." % stan["czeka_na"]
             if stan.get("plan"):
-                tekst += " Plan: %s." % stan["plan"]
+                tekst += " Kopia robocza planu: %s." % stan["plan"]
+            if stan.get("plan_canva"):
+                tekst += " Plan (oryginał) jest w Canvie: %s." % stan["plan_canva"]
+        tekst += " Plany kampanii są w Canvie (folder Agent AI Marketing) i każdy komputer pobiera je stamtąd."
     print(json.dumps({"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": tekst}}, ensure_ascii=False))
 
 

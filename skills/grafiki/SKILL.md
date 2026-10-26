@@ -12,19 +12,21 @@ Pełna procedura: `${CLAUDE_PLUGIN_ROOT}/wiedza/canva.md`. Przeczytaj ją przed 
 ## Warunki wejścia
 
 - Pozycje mają status `zaakceptowany` i nie mają `wymaga_danych`.
-- Event ma w `event.json` sekcję `canva` (`folder_id`, `wzorce_design_id`, mapę wzorców). Nie ma → najpierw przygotowanie eventu w Canvie (canva.md), po zgodzie LABOSPORT.
+- Plan jest pobrany z Canvy (aktualna wersja) i ma `canva.folder_kampanii_id`.
+- Event ma projekt wzorców w `Agent AI Marketing/<SKRÓT> <ROK>/_wzorce`. Nie ma → najpierw przygotowanie eventu w Canvie (canva.md), po zgodzie LABOSPORT.
 
 ## Procedura dla partii pozycji
 
 1. Wczytaj pozycje z `plan.json`. Zbierz: `wzorzec`, `naglowek`, `podtytul`, `cta_grafika`, `zdjecie`, `format`.
-2. Złóż projekt miesiąca (`merge-designs`, `create_new_design`) albo dołóż strony do istniejącego projektu agenta (`modify_existing_design`, `insert_pages`). Tytuł: `<SKRÓT><ROK>_posty_<RRRR-MM>` (stories: `_stories_`, karuzele: `_karuzele_`). Projekt do folderu eventu (`move-item-to-folder`).
-3. Zdjęcia: pełna rozdzielczość z folderu Canvy eventu; z dysku przez `create-upload-url` + `curl`.
+2. Projekt kampanii w jej folderze (obok planu): istnieje → dokładasz strony (`merge-designs`, `modify_existing_design`, `insert_pages`); nie istnieje → `merge-designs`, `create_new_design`, potem `move-item-to-folder` do folderu kampanii. Tytuł: `<SKRÓT><ROK>_posty_<RRRR-MM>` (stories: `_stories_`, karuzele: `_karuzele_`, rolki: `_rolki_`). **Jeden projekt na rodzaj grafiki w kampanii, nigdy osobny projekt na post.**
+3. Zdjęcia: najpierw pełna rozdzielczość z folderu Canvy eventu; z dysku przez `create-upload-url` + `curl` po sprawdzeniu formatu (HEIC → JPG przez `sips`), przy błędzie nowy adres i jedna ponowna próba (canva.md, „Produkcja grafik”, punkt 2).
 4. Edycja w jednej transakcji: tekst (`replace_text` / `find_and_replace_text`), zdjęcie (`update_fill`), notatka strony z ID pozycji (`replace_speaker_notes`). `finalize: "keep_open"`.
 5. Kontrola wizualna każdej miniatury (lista w canva.md, punkt 4). Poprawki od razu.
 6. Zwróć miniatury do akceptacji. **Bez zgody nie wysyłaj `commit`.**
 7. Po zgodzie: `commit`, eksport PNG (`export_quality: "pro"`), pobranie do `<kampania>/eksport/`, zapis w planie:
    `$LAB ustaw <plan.json> <ID> status=grafika_gotowa canva.design_id=<D...> canva.strona=<n> canva.link=<edit_url> eksport=eksport/<ID>.png`
 8. Panel: `$LAB stan --etap grafiki --postep <gotowe>/<wszystkie> --opis "Grafiki w Canvie"`.
+9. Oddaj koordynatorowi listę zmian; zapis planu w Canvie robi on (canva.md, punkt D).
 
 ## Zasady jakości
 
@@ -38,5 +40,7 @@ Pełna procedura: `${CLAUDE_PLUGIN_ROOT}/wiedza/canva.md`. Przeczytaj ją przed 
 ## Zakazane
 
 - Edycja, przenoszenie lub usuwanie projektów LABOSPORT spoza folderu `Agent AI Marketing`.
+- Osobne projekty dla pojedynczych postów i projekty poza folderem kampanii.
+- Edycja projektu planu (`*_PLAN_*`): to robi tylko koordynator.
 - `generate-design` i grafiki generowane przez AI, chyba że LABOSPORT wprost o to poprosi.
 - Zapis (`commit`) bez pokazania podglądu.

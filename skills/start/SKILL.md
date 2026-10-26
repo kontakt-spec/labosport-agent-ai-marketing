@@ -54,6 +54,7 @@ Każdy event ma:
    - w terminalu: `/mcp` → `canva` → Authenticate.
    Po zalogowaniu powtórz test.
 4. Konto Canvy musi mieć dostęp do projektów eventów (Teams LABOSPORT). Test: `search-designs` z zapytaniem nazwy eventu, np. „CTM”.
+5. Wspólny folder: `search-folders` „Agent AI Marketing”. Jest → `list-folder-items` i pokaż, jakie plany już są (projekty `*_PLAN_*` w folderach eventów). Tak nowa osoba od razu widzi, nad czym pracuje zespół. Nie ma → powiedz, że powstanie przy pierwszym planie.
 
 ## 5. Postiz
 
@@ -71,7 +72,8 @@ Powiedz konkretnie, czego brakuje, np. „Półmaraton Gdańsk: wrzućcie do `01
 ## 7. Panel i pierwszy krok
 
 - `$LAB stan --reset --log "Konfiguracja zakończona"` (panel pokaże gotowość).
-- Zaproponuj pierwszy plan (zwykle Castle Triathlon Malbork): „Mam zaplanować komunikację CTM na najbliższe tygodnie?” Zgoda → skill `labosport:marketing`.
+- W Canvie są już plany → zaproponuj pobranie aktualnego: „W Canvie jest plan CTM na listopad i grudzień (wersja 3). Pobieram go i mówię, co dalej?” Zgoda → skill `labosport:marketing`.
+- Nie ma planów → zaproponuj pierwszy (zwykle Castle Triathlon Malbork): „Mam zaplanować komunikację CTM na najbliższe tygodnie?” Zgoda → skill `labosport:marketing`.
 
 ## Diagnostyka (gdy coś nie działa)
 

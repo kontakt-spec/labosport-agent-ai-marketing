@@ -11,7 +11,8 @@ agents/<nazwa>.md                 6 agentów: analityk, planista, grafik, copywr
 hooks/hooks.json                  moduł panelu + hook SessionStart
 hooks/register.tsx                panel „Agent AI Marketing” (mod)
 types/index.d.ts                  kontrakt stanu panelu
-skrypty/lab.py                    narzędzia: progi, kalendarz, lint, plan-html, decyzje, stan, utc...
+skrypty/lab.py                    narzędzia: progi, kalendarz, lint, plan-html, decyzje, stan, utc, canva-eksport/import...
+skrypty/lab_chmura.py             plan w Canvie: podział danych na notatki stron, składanie z eksportu PPTX, suma kontrolna
 skrypty/sesja.py                  hook SessionStart (stan systemu dla modelu)
 skrypty/postiz_api.py             opcjonalny klient REST Postiz (zmiana statusu szkic → zaplanowany)
 wiedza/                           wiedza wspólna: firma, playbook, głos marki, Canva, Postiz, formaty, czarna lista
@@ -67,6 +68,21 @@ MCP Postiz nie zmienia statusu szkicu. Jeśli LABOSPORT chce, żeby agent sam pl
 2. Klient sam zapisuje go w pęku kluczy macOS (w Terminalu, klucz wkleja sam):
    `security add-generic-password -s labosport-postiz -a api -w`
 3. Agent używa `python3 -I skrypty/postiz_api.py status <ID> schedule` tylko na wyraźne polecenie dla konkretnych postów.
+
+## Plan w Canvie (od 0.2.0)
+
+Plan kampanii jest projektem-prezentacją w Canvie (`Agent AI Marketing/<SKRÓT> <ROK>/<kampania>/<SKRÓT><ROK>_PLAN_<RRRR-MM>`). Strony pokazują listę pozycji, a pełny `plan.json` jest w notatkach stron:
+
+```
+LABOSPORT-PLAN|<id planu>|v<wersja>|<n>/<N>|<sha12>
+DANE:<kawałek JSON>
+```
+
+- Zapis: `lab.py canva-eksport plan.json --oznacz --wyjscie strony.json`, agent wpisuje tekst i notatki stron, potem weryfikuje eksportem PPTX.
+- Odczyt: eksport PPTX z Canvy i `lab.py canva-import plan.pptx --do plan.json`. Wynik: `pobrano`, `bez_zmian`, `lokalne_zmiany_do_wyslania`, `konflikt` (wersja z Canvy w `plan.chmura.json`), `blad`.
+- Naprawa po złym zapisie: `lab.py canva-porownaj strony.json plan.pptx` wskazuje strony do ponownego zapisu.
+- Notatka strony w Canvie mieści 5000 znaków; kawałki mają do 4300. Plan na 74 pozycje to 16 stron.
+- Zapis planu robi tylko koordynator (skill `marketing`), automatycznie po każdej zmianie.
 
 ## Diagnostyka panelu
 

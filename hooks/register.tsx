@@ -262,6 +262,11 @@ export const register: Register = on => {
               Otwórz plan
             </Button>
           )}
+          {stan?.plan_canva && (
+            <Button key="canva" onPress={() => $.process.run(['open', stan.plan_canva ?? ''])}>
+              Plan w Canvie
+            </Button>
+          )}
           <Button key="folder" onPress={() => $.process.run(['open', ws])}>
             Folder eventów
           </Button>

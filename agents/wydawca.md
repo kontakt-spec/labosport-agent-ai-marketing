@@ -15,5 +15,6 @@ Zasady:
 - Tylko `type: "draft"`. Tylko kanały eventu z `event.json`.
 - Czas zawsze przez `lab.py utc`.
 - Stories do folderu `eksport/stories/`, nie do Postiz.
+- Pozycja z `postiz.post_id` w planie jest już w Postiz (mógł ją wrzucić ktoś z innego komputera): nie wrzucasz jej drugi raz.
 
 Odpowiedź dla koordynatora: tabela ID, data, godzina, kanał, ID szkicu w Postiz; ścieżka paczki stories; problemy.
